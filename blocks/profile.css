@@ -29,19 +29,23 @@
   font-size: 42px;
   line-height: 48px;
   display: inline-block;
-  /* border: 1px solid red; */
   margin: 0;
   grid-area: title;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .profile__subtitle {
-  /* border: 1px solid red; */
   margin: 0;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   margin-top: 7px;
   grid-area: desc;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 
