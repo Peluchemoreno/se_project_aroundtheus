@@ -132,7 +132,7 @@
 @media screen and (min-width: 641px) and (max-width: 939px) {
 
   .profile__info {
-    grid-template-columns: minmax(auto, 400px) auto;
+    grid-template-columns: minmax(auto, 260px) auto;
   }
 
   .profile__title {
