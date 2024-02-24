@@ -104,17 +104,19 @@
     text-align: center;
     margin-bottom: 36px;
   }
-
+  
   .profile__title {
     font-size: 22px;
     line-height: 27px;
     justify-self: center;
+    max-width: 196px;
   }
 
 
   .profile__subtitle {
     margin-top: 14px;
     justify-self: center;
+    max-width: 196px;
   }
 
   .profile__edit-button {
@@ -127,18 +129,18 @@
   }
 }
 
-@media screen and (min-width: 641px) and (max-width: 940px) {
+@media screen and (min-width: 641px) and (max-width: 939px) {
 
   .profile__info {
-    grid-template-columns: minmax(auto, 200px) auto;
+    grid-template-columns: minmax(auto, 400px) auto;
   }
 
   .profile__title {
-    font-size: 21px;
+    font-size: 31px;
   }
 
   .profile__subtitle {
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .profile__photo {
@@ -148,6 +150,7 @@
   .profile__edit-button {
     width: 18px;
     height: 18px;
+    margin-left: 10px;
   }
 
   .profile__add-button {
