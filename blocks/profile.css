@@ -90,19 +90,18 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 0;
-    margin-bottom: 36px;
+    padding-bottom: 36px;
   }
 
   .profile__photo {
     margin: 0;
-    margin-bottom: 30px;
-    margin: 42px;
+    padding: 42px;
   }
 
   .profile__info {
     grid-template-columns: minmax(auto, 196px) auto;
     text-align: center;
-    margin-bottom: 36px;
+    padding-bottom: 36px;
   }
   
   .profile__title {
@@ -114,7 +113,8 @@
 
 
   .profile__subtitle {
-    margin-top: 14px;
+    padding-top: 14px;
+    margin: 0;
     justify-self: center;
     max-width: 196px;
   }
