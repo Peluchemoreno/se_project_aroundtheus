@@ -41,7 +41,7 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  margin-top: 7px;
+  padding-top: 7px;
   grid-area: desc;
   text-overflow: ellipsis;
   white-space: nowrap;
