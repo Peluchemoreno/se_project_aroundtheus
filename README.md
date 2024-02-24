@@ -21,4 +21,7 @@ The way you'll do this at work is by exporting images directly from Figma — we
 **Github Pages Link**
 https://peluchemoreno.github.io/se_project_aroundtheus/
 
+**Video Description**
+https://drive.google.com/file/d/1iYdf16MzpEFVyEUoqppGz159i_a1kxMV/view?usp=sharing
+
 Good luck and have fun!
