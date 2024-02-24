@@ -8,7 +8,12 @@
 
 **Intro**
 
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.
+This project, titled Around the US, is my first project using a figma design. It was an interesting set of challenges using HTML, and CSS. I used the grid property to set up the layout of the cards. I plan to make updates to the project once we begin to learn Javascript, adding functionality to the buttons.
+
+**Technologies**
+
+- HTML
+- CSS
 
 **Figma**
 

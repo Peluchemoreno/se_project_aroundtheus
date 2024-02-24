@@ -3,7 +3,6 @@
   flex-direction: column;
   list-style-type: none;
   width: 282px;
-  height: 361px;
   border-radius: 10px;
 }
 
@@ -12,7 +11,7 @@
   justify-content: space-between;
   background-color: #fff;
   color: #000;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0 0 10px 10px;
   align-items: center;
 }
 
@@ -42,5 +41,5 @@
 }
 
 .card__heart:hover {
-  opacity: .6;
+  opacity: 50%;
 }
