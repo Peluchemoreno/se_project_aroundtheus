@@ -133,6 +133,7 @@
   .profile__photo {
     margin: 0;
     padding: 42px;
+    padding-bottom: 32px;
   }
 
   .profile__info {
@@ -150,7 +151,7 @@
 
 
   .profile__subtitle {
-    padding-top: 14px;
+    padding-top: 7px;
     margin: 0;
     justify-self: center;
     max-width: 196px;
