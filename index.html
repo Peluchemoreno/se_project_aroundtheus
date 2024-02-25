@@ -8,6 +8,33 @@
     <title>Around the US</title>
   </head>
   <body class="page">
+    <div class="modal modal_opened">
+      <form class="form">
+        <img
+          src="./images/close-icon.png"
+          alt="close modal button"
+          class="form__close-button"
+        />
+        <div class="form__header">
+          <h3 class="form__title">Edit profile</h3>
+        </div>
+        <div class="form__body">
+          <input
+            id="name"
+            type="text"
+            class="form__name form__input"
+            placeholder="Name"
+          />
+          <input
+            id="description"
+            type="text"
+            class="form__description form__input"
+            placeholder="Description"
+          />
+          <button type="submit" class="form__save-button">Save</button>
+        </div>
+      </form>
+    </div>
     <div class="page__content">
       <header class="header page__section">
         <img
