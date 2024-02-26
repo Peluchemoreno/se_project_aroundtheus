@@ -23,3 +23,15 @@ let initialCards = [{
   link: "https://images.unsplash.com/photo-1707341529566-5c63668edc11?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 }
 ];
+
+
+let editButton = document.querySelector('.profile__edit-button');
+editButton.addEventListener('click', toggleModal);
+
+let closeModalButton = document.querySelector('.modal__close-button');
+closeModalButton.addEventListener('click', toggleModal);
+
+function toggleModal(){
+  let modal = document.querySelector('.modal');
+  modal.classList.toggle('modal_opened');
+}
