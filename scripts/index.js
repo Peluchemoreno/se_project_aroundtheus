@@ -24,14 +24,21 @@ let initialCards = [{
 }
 ];
 
+let profileName = document.querySelector('.profile__title');
+let profileDescription = document.querySelector('.profile__subtitle');
 
 let editButton = document.querySelector('.profile__edit-button');
-editButton.addEventListener('click', toggleModal);
+editButton.addEventListener('click', openModal);
 
 let closeModalButton = document.querySelector('.modal__close-button');
-closeModalButton.addEventListener('click', toggleModal);
+closeModalButton.addEventListener('click', closeModal);
 
-function toggleModal(){
+function openModal(){
   let modal = document.querySelector('.modal');
-  modal.classList.toggle('modal_opened');
+  modal.classList.add("modal_opened")
+}
+
+function closeModal(){
+  let modal = document.querySelector('.modal');
+  modal.classList.remove('modal_opened');
 }
