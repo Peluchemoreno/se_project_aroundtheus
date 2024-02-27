@@ -35,7 +35,11 @@ closeModalButton.addEventListener('click', closeModal);
 
 function openModal(){
   let modal = document.querySelector('.modal');
-  modal.classList.add("modal_opened")
+  let formName = modal.querySelector('.modal__name');
+  let formDescription = modal.querySelector('.modal__description');
+  modal.classList.add("modal_opened");
+  formName.placeholder = profileName.textContent;
+  formDescription.placeholder = profileDescription.textContent;
 }
 
 function closeModal(){
