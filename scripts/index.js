@@ -24,9 +24,6 @@ let initialCards = [{
 }
 ];
 
-let profileName = document.querySelector('.profile__title');
-let profileDescription = document.querySelector('.profile__subtitle');
-
 let editButton = document.querySelector('.profile__edit-button');
 editButton.addEventListener('click', openModal);
 
@@ -35,14 +32,39 @@ closeModalButton.addEventListener('click', closeModal);
 
 function openModal(){
   let modal = document.querySelector('.modal');
-  let formName = modal.querySelector('.modal__name');
-  let formDescription = modal.querySelector('.modal__description');
   modal.classList.add("modal_opened");
-  formName.placeholder = profileName.textContent;
-  formDescription.placeholder = profileDescription.textContent;
+  nameInput.placeholder = profileName.textContent;
+  jobInput.placeholder = profileJob.textContent;
 }
 
 function closeModal(){
   let modal = document.querySelector('.modal');
   modal.classList.remove('modal_opened');
 }
+
+// find the form in the DOM
+const profileFormElement = document.querySelector('.modal__container')
+
+
+const nameInput = profileFormElement.querySelector('.modal__name')
+const jobInput = profileFormElement.querySelector('.modal__description')
+
+// find the profile elements in the DOM
+const profileName = document.querySelector('.profile__title');
+const profileJob = document.querySelector('.profile__subtitle');
+
+// the form submission handler. Note that its name 
+// starts with a verb and concisely describes what it does
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault(); 
+ 
+  // get the values of each field from the value property 
+  // of the corresponding input element
+
+  // insert new values into the textContent property of the 
+  // corresponding profile elements
+}
+
+// connect the handler to the form:
+// it will watch the submit event
+profileFormElement.addEventListener('submit', handleProfileFormSubmit);
