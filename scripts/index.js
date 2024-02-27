@@ -56,8 +56,6 @@ function handleProfileFormSubmit(evt) {
   closeModal();
 }
 
-
-
 function getCardElement(data){
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
