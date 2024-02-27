@@ -1,4 +1,4 @@
-let initialCards = [{
+const initialCards = [{
   name: "Diver",
   link: "https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 },
@@ -26,26 +26,25 @@ let initialCards = [{
 
 const editButton = document.querySelector('.profile__edit-button');
 const closeModalButton = document.querySelector('.modal__close-button');
-const profileFormElement = document.querySelector('.modal__container')
+const profileFormElement = document.querySelector('#form');
 const nameInput = profileFormElement.querySelector('.modal__name')
 const jobInput = profileFormElement.querySelector('.modal__description')
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
 const cardsContainer = document.querySelector('.cards');
+const modal = document.querySelector('.modal');
 
 editButton.addEventListener('click', openModal);
 closeModalButton.addEventListener('click', closeModal);
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 
 function openModal(){
-  const modal = document.querySelector('.modal');
   modal.classList.add("modal_opened");
-  nameInput.placeholder = profileName.textContent;
-  jobInput.placeholder = profileJob.textContent;
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 }
 
 function closeModal(){
-  let modal = document.querySelector('.modal');
   modal.classList.remove('modal_opened');
 }
 
