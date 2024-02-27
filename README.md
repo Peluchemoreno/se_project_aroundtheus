@@ -24,6 +24,7 @@ This project, titled Around the US, is my first project using a figma design. It
 
 The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster.
 ![Screenshot](./images/screenshot.png)
+![GIF](./images/Example%20GIF.gif)
 
 **Github Pages Link**
 https://peluchemoreno.github.io/se_project_aroundtheus/
