@@ -11,13 +11,13 @@
   overflow: auto;
   background-color: rgba(0,0,0,.5);
   opacity: 0;
-  transition: visibility .2s ease-in-out, opacity .4s ease-in-out;
+  transition: visibility 0s linear, opacity .3s linear;
 }
 
 .modal_opened {
-  visibility: visible;
   opacity: 1;
   display: flex;
+  visibility: visible;
 }
 
 .modal__container {

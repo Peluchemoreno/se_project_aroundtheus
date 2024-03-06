@@ -40,6 +40,9 @@ const profileModal = document.querySelector('.modal');
 const cardModal = document.querySelector('.modal_type_card');
 const cardCloseModalButton = document.querySelector('.modal__close-button_type_card');
 const imagePreviewModal = document.querySelector('.modal_type_image');
+const closeImagePreviewButton = imagePreviewModal.querySelector('.modal__close-button');
+const imagePreview = imagePreviewModal.querySelector('.modal__image');
+const imageDescription = imagePreviewModal.querySelector('.modal__image-description');
 
 
 editButton.addEventListener('click', openModal);
@@ -48,6 +51,7 @@ profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardAddFormElement.addEventListener('submit', handleCardAdd)
 addCardButton.addEventListener('click', openCardModal);
 cardCloseModalButton.addEventListener('click', closeCardModal);
+closeImagePreviewButton.addEventListener('click', closeImagePreview)
 
 function openModal(){
   profileModal.classList.add("modal_opened");
@@ -72,7 +76,6 @@ function closeCardModal(){
 
 function closeImagePreview(){
   imagePreviewModal.classList.toggle('modal_opened')
-  imagePreviewModal.innerHTML = '';
 }
 
 function handleProfileFormSubmit(evt) {
@@ -110,30 +113,10 @@ function getCardElement(data){
   })
 
   cardImage.addEventListener('click', ()=>{
-    const imagePreviewModal = document.querySelector('.modal_type_image');
-    const imageContainer = document.createElement('div');
-    const modalImage = document.createElement('img');
-    const modalClose = document.createElement('img');
-    const imageDescription = document.createElement('p');
-    
-    imageContainer.classList.add('modal__image-container');
-    modalImage.classList.add('modal__image');
-    modalImage.src = cardImage.src;
-    modalImage.alt = cardImage.alt;
-    modalClose.classList.add('modal__close-button');
-    modalClose.src = "../images/close-icon.png";
-    imageDescription.classList.add('modal__image-description');
+    imagePreview.src = cardImage.src;
+    imagePreview.alt = cardImage.alt;
     imageDescription.textContent = cardTitle.textContent;
-    
-    imagePreviewModal.append(imageContainer)
-    imageContainer.append(modalImage);
-    imageContainer.append(modalClose);
-    imageContainer.append(imageDescription);
-
-    imagePreviewModal.classList.add('modal_opened')
-
-    const imagePreviewClose = imagePreviewModal.querySelector('.modal__close-button');
-    imagePreviewClose.addEventListener('click', closeImagePreview);
+    imagePreviewModal.classList.toggle('modal_opened')
   })
   
   cardImage.src = data.link;
