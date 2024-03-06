@@ -41,10 +41,14 @@
   width: 21px;
   height: 18px;
   margin-right: 20px;
-  transition: opacity .3s ease;
+  transition: opacity .3s ease, background-color .3s ease;
   cursor: pointer;
 }
 
 .card__heart:hover {
   opacity: 50%;
+}
+
+.liked {
+  background-color: #000;
 }

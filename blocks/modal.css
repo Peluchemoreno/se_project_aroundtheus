@@ -55,9 +55,15 @@
   margin-left: 36px;
 }
 
+
 .modal__input::placeholder{
   color: #000;
 }
+
+.modal__input_type_card::placeholder {
+  color: #c4c4c4;
+}
+
 
 .modal__name {
   margin-bottom: 30px;

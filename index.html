@@ -10,7 +10,7 @@
   </head>
   <body class="page">
     <div class="modal">
-      <form id="form" class="modal__container">
+      <form id="profileForm" class="modal__container">
         <img
           src="./images/close-icon.png"
           alt="close modal button"
@@ -30,6 +30,29 @@
           placeholder="Description"
         />
         <button type="submit" class="modal__save-button">Save</button>
+      </form>
+    </div>
+    <div class="modal modal_type_card">
+      <form id="cardForm" class="modal__container">
+        <img
+          src="./images/close-icon.png"
+          alt="close modal button"
+          class="modal__close-button modal__close-button_type_card"
+        />
+        <h3 class="modal__title">New place</h3>
+        <input
+          id="name"
+          type="text"
+          class="modal__name modal__input modal__input_type_card"
+          placeholder="Title"
+        />
+        <input
+          id="description"
+          type="text"
+          class="modal__description modal__input modal__input_type_card"
+          placeholder="Image link"
+        />
+        <button type="submit" class="modal__save-button">Create</button>
       </form>
     </div>
     <div class="page__content">
