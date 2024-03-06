@@ -40,6 +40,7 @@ const profileModal = document.querySelector('.modal');
 const cardModal = document.querySelector('.modal_type_card');
 const cardCloseModalButton = document.querySelector('.modal__close-button_type_card');
 
+
 editButton.addEventListener('click', openModal);
 closeModalButton.addEventListener('click', closeModal);
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
@@ -89,13 +90,26 @@ function getCardElement(data){
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   let cardTitle = cardElement.querySelector(".card__title");
-  let cardImage = cardElement.querySelector(".card__image")
+  let cardImage = cardElement.querySelector(".card__image");
+  const cardLikeButton = cardElement.querySelector('.card__heart');
+  const cardDeleteButton = cardElement.querySelector('.card__delete');
+
+  cardLikeButton.addEventListener('click', ()=>{
+    cardLikeButton.classList.toggle("card__heart_active")
+  })
+
+  cardDeleteButton.addEventListener('click', ()=>{
+    cardElement.remove();
+  })
+
+
   cardImage.src = data.link;
   cardTitle.textContent = data.name;
   cardImage.alt = data.name;
   return cardElement
   
 }
+
 
 initialCards.forEach(element => {
   const cardElement = getCardElement(element);
