@@ -104,6 +104,20 @@
   transition: opacity ease .3s;
 }
 
+.modal__image {
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
+.modal__image-container {
+  position: relative;
+}
+
+.modal__image-description {
+  font-size: 12px;
+  line-height: 14px;
+}
+
 .modal__close-button:hover{
   opacity: .6;
 }

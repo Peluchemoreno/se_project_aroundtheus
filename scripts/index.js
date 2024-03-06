@@ -39,6 +39,7 @@ const cardsContainer = document.querySelector('.cards');
 const profileModal = document.querySelector('.modal');
 const cardModal = document.querySelector('.modal_type_card');
 const cardCloseModalButton = document.querySelector('.modal__close-button_type_card');
+const imagePreviewModal = document.querySelector('.modal_type_image');
 
 
 editButton.addEventListener('click', openModal);
@@ -66,6 +67,12 @@ function closeModal(){
 
 function closeCardModal(){
   cardModal.classList.remove('modal_opened')
+}
+
+
+function closeImagePreview(){
+  imagePreviewModal.classList.toggle('modal_opened')
+  imagePreviewModal.innerHTML = '';
 }
 
 function handleProfileFormSubmit(evt) {
@@ -102,7 +109,33 @@ function getCardElement(data){
     cardElement.remove();
   })
 
+  cardImage.addEventListener('click', ()=>{
+    const imagePreviewModal = document.querySelector('.modal_type_image');
+    const imageContainer = document.createElement('div');
+    const modalImage = document.createElement('img');
+    const modalClose = document.createElement('img');
+    const imageDescription = document.createElement('p');
+    
+    imageContainer.classList.add('modal__image-container');
+    modalImage.classList.add('modal__image');
+    modalImage.src = cardImage.src;
+    modalImage.alt = cardImage.alt;
+    modalClose.classList.add('modal__close-button');
+    modalClose.src = "../images/close-icon.png";
+    imageDescription.classList.add('modal__image-description');
+    imageDescription.textContent = cardTitle.textContent;
+    
+    imagePreviewModal.append(imageContainer)
+    imageContainer.append(modalImage);
+    imageContainer.append(modalClose);
+    imageContainer.append(imageDescription);
 
+    imagePreviewModal.classList.add('modal_opened')
+
+    const imagePreviewClose = imagePreviewModal.querySelector('.modal__close-button');
+    imagePreviewClose.addEventListener('click', closeImagePreview);
+  })
+  
   cardImage.src = data.link;
   cardTitle.textContent = data.name;
   cardImage.alt = data.name;
