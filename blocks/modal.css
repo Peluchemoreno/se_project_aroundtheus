@@ -1,5 +1,5 @@
 .modal {
-  display: none;
+  visibility: hidden;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -10,9 +10,13 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,.5);
+  opacity: 0;
+  transition: visibility .2s ease-in-out, opacity .4s ease-in-out;
 }
 
 .modal_opened {
+  visibility: visible;
+  opacity: 1;
   display: flex;
 }
 
