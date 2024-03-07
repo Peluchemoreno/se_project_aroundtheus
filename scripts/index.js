@@ -24,9 +24,10 @@ const initialCards = [{
 }
 ];
 
+const profileModal = document.querySelector('.modal_type_profile');
 const editButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button')
-const closeModalButton = document.querySelector('.modal__close-button');
+const profileModalCloseButton = profileModal.querySelector('.modal__close-button');
 const profileFormElement = document.querySelector('#profileForm');
 const cardAddFormElement = document.querySelector('#cardForm');
 const nameInput = profileFormElement.querySelector('.modal__name');
@@ -36,53 +37,56 @@ const cardImageLinkInput = cardAddFormElement.querySelector(".modal__description
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
 const cardsContainer = document.querySelector('.cards');
-const profileModal = document.querySelector('.modal');
 const cardModal = document.querySelector('.modal_type_card');
-const cardCloseModalButton = document.querySelector('.modal__close-button_type_card');
+const cardCloseModalButton = cardModal.querySelector('.modal__close-button_type_card');
 const imagePreviewModal = document.querySelector('.modal_type_image');
 const closeImagePreviewButton = imagePreviewModal.querySelector('.modal__close-button');
 const imagePreview = imagePreviewModal.querySelector('.modal__image');
 const imageDescription = imagePreviewModal.querySelector('.modal__image-description');
 
 
-editButton.addEventListener('click', openModal);
-closeModalButton.addEventListener('click', closeModal);
+editButton.addEventListener('click', ()=>{
+  openModal(profileModal)
+  renderProfileDetails();
+});
+profileModalCloseButton.addEventListener('click', ()=>{
+  closeModal(profileModal)
+});
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardAddFormElement.addEventListener('submit', handleCardAdd)
-addCardButton.addEventListener('click', openCardModal);
-cardCloseModalButton.addEventListener('click', closeCardModal);
-closeImagePreviewButton.addEventListener('click', closeImagePreview)
+addCardButton.addEventListener('click', ()=>{
+  openModal(cardModal)
+  resetInputs(cardAddFormElement)
+});
+cardCloseModalButton.addEventListener('click', ()=>{
+  closeModal(cardModal)
+});
+closeImagePreviewButton.addEventListener('click', ()=>{
+  closeModal(imagePreviewModal)
+})
 
-function openModal(){
-  profileModal.classList.add("modal_opened");
+function openModal(element){
+  element.classList.add('modal_opened')
+}
+
+function renderProfileDetails(){
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 }
 
-function openCardModal(){
-  cardModal.classList.add('modal_opened');
-  cardTitleInput.value = '';
-  cardImageLinkInput.value = '';
+function resetInputs(form){
+  form.reset()
 }
 
-function closeModal(){
-  profileModal.classList.remove('modal_opened');
-}
-
-function closeCardModal(){
-  cardModal.classList.remove('modal_opened')
-}
-
-
-function closeImagePreview(){
-  imagePreviewModal.classList.toggle('modal_opened')
+function closeModal(element){
+  element.classList.remove('modal_opened');
 }
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault(); 
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  closeModal();
+  closeModal(profileModal);
 }
 
 function handleCardAdd(evt){
@@ -93,13 +97,13 @@ function handleCardAdd(evt){
   }
   cardElement = getCardElement(card)
   cardsContainer.prepend(cardElement)
-  closeCardModal()
+  closeModal(cardModal)
 }
 
 function getCardElement(data){
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-  let cardTitle = cardElement.querySelector(".card__title");
+  const cardTitle = cardElement.querySelector(".card__title");
   let cardImage = cardElement.querySelector(".card__image");
   const cardLikeButton = cardElement.querySelector('.card__heart');
   const cardDeleteButton = cardElement.querySelector('.card__delete');
@@ -116,7 +120,7 @@ function getCardElement(data){
     imagePreview.src = cardImage.src;
     imagePreview.alt = cardImage.alt;
     imageDescription.textContent = cardTitle.textContent;
-    imagePreviewModal.classList.toggle('modal_opened')
+    openModal(imagePreviewModal);
   })
   
   cardImage.src = data.link;

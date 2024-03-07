@@ -17,7 +17,6 @@
 
 .modal_opened {
   opacity: 1;
-  display: flex;
   visibility: visible;
 }
 
@@ -100,6 +99,8 @@
 
 
 .modal__close-button {
+  background: url(../images/close-icon.png) transparent center no-repeat;
+  border: none;
   cursor: pointer;
   position: absolute;
   width: 40px;
