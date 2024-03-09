@@ -25,6 +25,7 @@ This project, titled Around the US, is my first project using a figma design. It
 ![Screenshot](./images/screenshot.png)
 ![GIF](./images/Example%20GIF.gif)
 ![Responsive GIF](./images/responsive%20gif.gif)
+![Link to video example](https://www.loom.com/share/f97a6915dbe1449db9053f2024b60a17?sid=f8711af6-ce89-42db-a635-d3980aa9f0de)
 
 **Github Pages Link**
 https://peluchemoreno.github.io/se_project_aroundtheus/
