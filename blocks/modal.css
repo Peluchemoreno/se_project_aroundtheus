@@ -135,7 +135,7 @@
   opacity: .6;
 }
 
-.modal__input_status_invalid {
+.modal__input:invalid {
   border-bottom: 1px solid red;
 }
 
@@ -148,15 +148,20 @@
 
 
 .modal__error-message {
+  display: none;
   color: #ff0000;
   font-size: 12px;
   line-height: 14px;
   padding-left: 36px;
-  max-width: 164px;
+  max-width: 358px;
   max-height: 12px;
   position: absolute;
   left: 0;
   top: 35px; 
+}
+
+.modal__error-message_visible {
+  display: block;
 }
 
 

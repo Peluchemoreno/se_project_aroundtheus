@@ -1,34 +1,61 @@
 
-function showInputError(formElement, input, configuration){
-  console.log(input.id)
+function showInputError(formElement, input, {errorClass}){
   const errorBox = formElement.querySelector(`#${input.id}-error`);
-  console.log(errorBox)
+  errorBox.classList.add(errorClass)
+  errorBox.textContent = input.validationMessage;
 }
 
-function removeInputError(formElement, input, configuration){
-
+function removeInputError(formElement, input, {errorClass}){
+  const errorBox = formElement.querySelector(`#${input.id}-error`);
+  errorBox.classList.remove(errorClass)
+  errorBox.textContent = '';
 }
 
 function checkInputValidity(formElement, input, configuration){
   if (!input.validity.valid){
-    showInputError(formElement, input, configuration)
-  } else {
-    removeInputError();
-  }
+    showInputError(formElement, input, configuration);
+    return
+  } 
+
+  removeInputError(formElement, input, configuration);
+
 }
-
-function setEventListeners(formElement, configuration){
-
-  const {inputSelector} = configuration;
-  const {submitButtonSelector} = configuration;
-  const modalErrorTextContainer = formElement.querySelector('.modal__error-message')
+function setEventListeners(formElement, {inputSelector, submitButtonSelector}){
   const inputs = [...formElement.querySelectorAll(inputSelector)];
-  console.log(inputs)
+  const submitButton = formElement.querySelector(submitButtonSelector)
   inputs.forEach(input => {
     input.addEventListener('input', (e)=>{
-      checkInputValidity(formElement, input, configuration)
+      checkInputValidity(formElement, input, configuration);
+      toggleButtonStatus(inputs, submitButton);
     })
   })
+}
+
+function disableButton(button){
+  const {inactiveButtonClass} = configuration;
+  button.disabled = true;
+  button.classList.add(inactiveButtonClass)
+}
+
+function enableButton(button){
+  const {inactiveButtonClass} = configuration;
+  button.classList.remove(inactiveButtonClass)
+  button.disabled = false;
+}
+
+function hasInvalidInputs(inputList){
+  return !inputList.every(input =>
+    input.validity.valid)
+}
+
+function toggleButtonStatus(inputs, submitButton){
+  if (hasInvalidInputs(inputs)){
+    disableButton(submitButton);
+    return 
+  }
+
+  enableButton(submitButton);
+
 }
 
 function enableValidation(configuration){
@@ -36,39 +63,11 @@ function enableValidation(configuration){
   formElements.forEach((form)=>{
     form.addEventListener('submit', (e)=>{
       e.preventDefault();
-      console.log('submitted')
     });
 
     setEventListeners(form, configuration)
-
-    //search for all inputs inside of form
-    //loop through all inputs and test if they are all valid
-      //if input is not valid
-        //disable button
-        //add error class to input
-        //generate error message
-        //display error message
-      //if input is valid
-        //enable button
-        //remove error class from input
-        //hide error message
-        //reset error messages
-
-
-    
-
   })
 
-}
-
-function deactivateSubmitButton(button){
-  const {inactiveButtonClass} = configuration;
-  button.classList.add(inactiveButtonClass);
-}
-
-function activateSubmitButton(button){
-  const {inactiveButtonClass} = configuration;
-  button.classList.remove(inactiveButtonClass);
 }
 
 const configuration = {
@@ -76,8 +75,8 @@ const configuration = {
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__save-button",
   inactiveButtonClass: "modal__save-button_disabled",
-  inputErrorClass: "modal__input_status_invalid",
-  errorClass: "popup__error_visible"
+  inputErrorClass: "modal__input:invalid",
+  errorClass: "modal__error-message_visible"
 }
 
 enableValidation(configuration);

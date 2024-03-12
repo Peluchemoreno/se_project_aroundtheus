@@ -43,6 +43,7 @@ const imagePreviewModal = document.querySelector('.modal_type_image');
 const closeImagePreviewButton = imagePreviewModal.querySelector('.modal__close-button');
 const imagePreview = imagePreviewModal.querySelector('.modal__image');
 const imageDescription = imagePreviewModal.querySelector('.modal__image-description');
+const modals = Array.from(document.querySelectorAll('.modal'));
 
 
 editButton.addEventListener('click', ()=>{
@@ -65,8 +66,24 @@ closeImagePreviewButton.addEventListener('click', ()=>{
   closeModal(imagePreviewModal)
 })
 
+function handleEscapeClose(event){
+  let modalsOpened = [];
+  modals.forEach(modal => {
+    if (modal.classList.contains('modal_opened')){
+      modalsOpened.push(modal)
+    }
+  })
+  console.log(modalsOpened)
+ if (event.key === "Escape"){
+  closeModal(modalsOpened[0])
+ }
+}
+
+
+
 function openModal(element){
   element.classList.add('modal_opened')
+  document.addEventListener('keydown', handleEscapeClose);
 }
 
 function renderProfileDetails(){
@@ -80,6 +97,7 @@ function resetInputs(form){
 
 function closeModal(element){
   element.classList.remove('modal_opened');
+  document.removeEventListener('keydown', handleEscapeClose)
 }
 
 function handleProfileFormSubmit(evt) {
@@ -130,19 +148,19 @@ function getCardElement(data){
   
 }
 
+function addModalCloseEventListener(modal){
+  modal.addEventListener('click', e => {
+    if (e.target.className === `modal modal_type_${modal.id} modal_opened`){
+      closeModal(modal)
+    }
+  })
+}
 
 initialCards.forEach(element => {
   const cardElement = getCardElement(element);
   cardsContainer.append(cardElement)
 });
 
-//------------------------------------form validation---------------------///
-
-function setEventListeners(formElements, inputElements){
-  
-}
-
-
-function enableValidation(){
-
-}
+modals.forEach(modal => {
+  addModalCloseEventListener(modal)
+})
