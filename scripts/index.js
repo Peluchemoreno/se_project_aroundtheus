@@ -28,8 +28,8 @@ const profileModal = document.querySelector('.modal_type_profile');
 const editButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button')
 const profileModalCloseButton = profileModal.querySelector('.modal__close-button');
-const profileFormElement = document.querySelector('#profileForm');
-const cardAddFormElement = document.querySelector('#cardForm');
+const profileFormElement = document.forms['profileForm'];
+const cardAddFormElement = document.forms['cardForm'];
 const nameInput = profileFormElement.querySelector('.modal__name');
 const jobInput = profileFormElement.querySelector('.modal__description');
 const cardTitleInput = cardAddFormElement.querySelector('.modal__name')
@@ -44,41 +44,32 @@ const closeImagePreviewButton = imagePreviewModal.querySelector('.modal__close-b
 const imagePreview = imagePreviewModal.querySelector('.modal__image');
 const imageDescription = imagePreviewModal.querySelector('.modal__image-description');
 const modals = Array.from(document.querySelectorAll('.modal'));
+const closeButtons = Array.from(document.querySelectorAll('.modal__close-button'))
 
+closeButtons.forEach(button => {
+  const modal = button.closest(".modal");
+  modal.addEventListener('mousedown', ()=>{closeModal(modal)})
+})
 
 editButton.addEventListener('click', ()=>{
   openModal(profileModal)
   renderProfileDetails();
 });
-profileModalCloseButton.addEventListener('click', ()=>{
-  closeModal(profileModal)
-});
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardAddFormElement.addEventListener('submit', handleCardAdd)
-addCardButton.addEventListener('click', ()=>{
+addCardButton.addEventListener('mousedown', ()=>{
   openModal(cardModal)
   resetInputs(cardAddFormElement)
 });
-cardCloseModalButton.addEventListener('click', ()=>{
-  closeModal(cardModal)
-});
-closeImagePreviewButton.addEventListener('click', ()=>{
+closeImagePreviewButton.addEventListener('mousedown', ()=>{
   closeModal(imagePreviewModal)
 })
 
 function handleEscapeClose(event){
-  let modalsOpened = [];
-  modals.forEach(modal => {
-    if (modal.classList.contains('modal_opened')){
-      modalsOpened.push(modal)
+  if (event.key === "Escape"){
+    modals.forEach(closeModal)
+      }
     }
-  })
-  console.log(modalsOpened)
- if (event.key === "Escape"){
-  closeModal(modalsOpened[0])
- }
-}
-
 
 
 function openModal(element){
@@ -113,7 +104,7 @@ function handleCardAdd(evt){
     name: cardTitleInput.value,
     link: cardImageLinkInput.value
   }
-  cardElement = getCardElement(card)
+  const cardElement = getCardElement(card)
   cardsContainer.prepend(cardElement)
   closeModal(cardModal)
 }
@@ -122,19 +113,19 @@ function getCardElement(data){
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardTitle = cardElement.querySelector(".card__title");
-  let cardImage = cardElement.querySelector(".card__image");
+  const cardImage = cardElement.querySelector(".card__image");
   const cardLikeButton = cardElement.querySelector('.card__heart');
   const cardDeleteButton = cardElement.querySelector('.card__delete');
 
-  cardLikeButton.addEventListener('click', ()=>{
+  cardLikeButton.addEventListener('mousedown', ()=>{
     cardLikeButton.classList.toggle("card__heart_active")
   })
 
-  cardDeleteButton.addEventListener('click', ()=>{
+  cardDeleteButton.addEventListener('mousedown', ()=>{
     cardElement.remove();
   })
 
-  cardImage.addEventListener('click', ()=>{
+  cardImage.addEventListener('mousedown', ()=>{
     imagePreview.src = cardImage.src;
     imagePreview.alt = cardImage.alt;
     imageDescription.textContent = cardTitle.textContent;
@@ -149,7 +140,7 @@ function getCardElement(data){
 }
 
 function addModalCloseEventListener(modal){
-  modal.addEventListener('click', e => {
+  modal.addEventListener('mousedown', e => {
     if (e.target.className === `modal modal_type_${modal.id} modal_opened`){
       closeModal(modal)
     }
@@ -161,6 +152,4 @@ initialCards.forEach(element => {
   cardsContainer.append(cardElement)
 });
 
-modals.forEach(modal => {
-  addModalCloseEventListener(modal)
-})
+modals.forEach(addModalCloseEventListener)
