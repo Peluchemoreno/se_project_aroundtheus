@@ -48,7 +48,7 @@ const closeButtons = Array.from(document.querySelectorAll('.modal__close-button'
 
 closeButtons.forEach(button => {
   const modal = button.closest(".modal");
-  button.addEventListener('mousedown', ()=>{closeModal(modal)})
+  button.addEventListener('click', ()=>{closeModal(modal)})
 })
 
 editButton.addEventListener('click', ()=>{
@@ -57,13 +57,10 @@ editButton.addEventListener('click', ()=>{
 });
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardAddFormElement.addEventListener('submit', handleCardAdd)
-addCardButton.addEventListener('mousedown', ()=>{
+addCardButton.addEventListener('click', ()=>{
   openModal(cardModal)
   resetInputs(cardAddFormElement)
 });
-closeImagePreviewButton.addEventListener('mousedown', ()=>{
-  closeModal(imagePreviewModal)
-})
 
 function handleEscapeClose(event){
   if (event.key === "Escape"){
@@ -117,15 +114,15 @@ function getCardElement(data){
   const cardLikeButton = cardElement.querySelector('.card__heart');
   const cardDeleteButton = cardElement.querySelector('.card__delete');
 
-  cardLikeButton.addEventListener('mousedown', ()=>{
+  cardLikeButton.addEventListener('click', ()=>{
     cardLikeButton.classList.toggle("card__heart_active")
   })
 
-  cardDeleteButton.addEventListener('mousedown', ()=>{
+  cardDeleteButton.addEventListener('click', ()=>{
     cardElement.remove();
   })
 
-  cardImage.addEventListener('mousedown', ()=>{
+  cardImage.addEventListener('click', ()=>{
     imagePreview.src = cardImage.src;
     imagePreview.alt = cardImage.alt;
     imageDescription.textContent = cardTitle.textContent;
