@@ -191,6 +191,7 @@
   .modal__input {
     margin-left: 22px;
     margin-right: 22px;
+    max-width: 238px;
   }
 
   .modal__name {
