@@ -57,6 +57,7 @@
   padding-bottom: 13px;
   margin-right: 36px;
   margin-left: 36px;
+  position: relative;
 }
 
 
@@ -126,6 +127,49 @@
 
 .modal__close-button:hover{
   opacity: .6;
+}
+
+.modal__input_status_invalid {
+  border-bottom: 1px solid red;
+}
+
+.modal__save-button_disabled {
+  background-color: #fff;
+  color: rgba(0, 0, 0, .2);
+  border: 1px solid rgba(0, 0, 0, .2);
+  cursor: default;
+}
+
+.modal__error-message {
+  color: #ff0000;
+  font-size: 12px;
+  line-height: 14px;
+  padding-left: 36px;
+  max-width: 164px;
+  max-height: 12px;
+  position: absolute;
+  top: calc(100% + 5px);
+  /* display: none; */
+}
+
+.modal__error-message_type_name {
+  position: absolute;
+  top: 153px;
+}
+
+.modal__error-message_type_description {
+  position: absolute;
+  top: 215px;
+}
+
+.modal__error-message_type_title {
+  position: relative;
+  bottom: 25px;
+}
+
+.modal__error-message_type_url {
+  position: relative;
+  bottom: 44px;
 }
 
 @media screen and (max-width: 640px) {

@@ -135,3 +135,14 @@ initialCards.forEach(element => {
   const cardElement = getCardElement(element);
   cardsContainer.append(cardElement)
 });
+
+//------------------------------------form validation---------------------///
+
+function setEventListeners(formElements, inputElements){
+  
+}
+
+
+function enableValidation(){
+
+}
