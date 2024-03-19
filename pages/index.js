@@ -1,6 +1,9 @@
 import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import {configuration} from "../components/FormValidator.js"
 
 
+//-------------------------------test area---------------------------
 
 
 
@@ -36,7 +39,6 @@ const initialCards = [{
 const profileModal = document.querySelector('.modal_type_profile');
 const editButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button')
-const profileModalCloseButton = profileModal.querySelector('.modal__close-button');
 const profileFormElement = document.forms['profileForm'];
 const cardAddFormElement = document.forms['cardForm'];
 const nameInput = profileFormElement.querySelector('.modal__name');
@@ -52,6 +54,10 @@ const imagePreview = imagePreviewModal.querySelector('.modal__image');
 const imageDescription = imagePreviewModal.querySelector('.modal__image-description');
 const modals = Array.from(document.querySelectorAll('.modal'));
 const closeButtons = Array.from(document.querySelectorAll('.modal__close-button'))
+const profileForm = document.querySelector('#profileForm')
+const addForm = document.querySelector('#cardForm')
+const addFormElement = new FormValidator(configuration, profileForm)
+const profileEditForm = new FormValidator(configuration, addForm)
 
 
 
@@ -122,7 +128,7 @@ function handleImageClick(image){
   openModal(imagePreviewModal);
 }
 
-        
+
 function addModalCloseEventListener(modal){
   modal.addEventListener('mousedown', e => {
     if (e.target.className === `modal modal_type_${modal.id} modal_opened`){
@@ -130,10 +136,12 @@ function addModalCloseEventListener(modal){
     }
   })
 }
-        
-    
-          
+
+
+
 modals.forEach(addModalCloseEventListener)
+
+
 //-----------------------------------------------test area--------------------
 
 
@@ -141,6 +149,10 @@ initialCards.forEach(card => {
   const cardFromClass = new Card (card, '.card-template', handleImageClick)
   cardsContainer.append(cardFromClass.generateCard())
 })
+
+
+addFormElement.enableValidation()
+profileEditForm.enableValidation()
 
 
 //----------------------------------------------test area ---------------------

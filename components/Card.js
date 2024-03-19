@@ -30,8 +30,6 @@ export default class Card {
       this._handleImageClick(this);
     })
 
-
-
     };
   
   generateCard(){
