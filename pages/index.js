@@ -1,3 +1,12 @@
+import Card from "../components/Card.js";
+
+
+
+
+
+
+//------------------------------------------------------------------//
+
 const initialCards = [{
   name: "Diver",
   link: "https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -38,13 +47,13 @@ const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
 const cardsContainer = document.querySelector('.cards');
 const cardModal = document.querySelector('.modal_type_card');
-const cardCloseModalButton = cardModal.querySelector('.modal__close-button_type_card');
 const imagePreviewModal = document.querySelector('.modal_type_image');
-const closeImagePreviewButton = imagePreviewModal.querySelector('.modal__close-button');
 const imagePreview = imagePreviewModal.querySelector('.modal__image');
 const imageDescription = imagePreviewModal.querySelector('.modal__image-description');
 const modals = Array.from(document.querySelectorAll('.modal'));
 const closeButtons = Array.from(document.querySelectorAll('.modal__close-button'))
+
+
 
 closeButtons.forEach(button => {
   const modal = button.closest(".modal");
@@ -65,8 +74,8 @@ addCardButton.addEventListener('click', ()=>{
 function handleEscapeClose(event){
   if (event.key === "Escape"){
     modals.forEach(closeModal)
-      }
-    }
+  }
+}
 
 
 function openModal(element){
@@ -101,41 +110,19 @@ function handleCardAdd(evt){
     name: cardTitleInput.value,
     link: cardImageLinkInput.value
   }
-  const cardElement = getCardElement(card)
-  cardsContainer.prepend(cardElement)
+  const cardElement = new Card(card, '.card-template', handleImageClick);
+  cardsContainer.prepend(cardElement.generateCard())
   closeModal(cardModal)
 }
 
-function getCardElement(data){
-  const cardTemplate = document.querySelector('#card-template').content;
-  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardLikeButton = cardElement.querySelector('.card__heart');
-  const cardDeleteButton = cardElement.querySelector('.card__delete');
-
-  cardLikeButton.addEventListener('click', ()=>{
-    cardLikeButton.classList.toggle("card__heart_active")
-  })
-
-  cardDeleteButton.addEventListener('click', ()=>{
-    cardElement.remove();
-  })
-
-  cardImage.addEventListener('click', ()=>{
-    imagePreview.src = cardImage.src;
-    imagePreview.alt = cardImage.alt;
-    imageDescription.textContent = cardTitle.textContent;
-    openModal(imagePreviewModal);
-  })
-  
-  cardImage.src = data.link;
-  cardTitle.textContent = data.name;
-  cardImage.alt = data.name;
-  return cardElement
-  
+function handleImageClick(image){
+  imagePreview.src = `${image._link}`;
+  imagePreview.alt = `${image._name}`;
+  imageDescription.textContent = `${image._name}`;
+  openModal(imagePreviewModal);
 }
 
+        
 function addModalCloseEventListener(modal){
   modal.addEventListener('mousedown', e => {
     if (e.target.className === `modal modal_type_${modal.id} modal_opened`){
@@ -143,10 +130,17 @@ function addModalCloseEventListener(modal){
     }
   })
 }
-
-initialCards.forEach(element => {
-  const cardElement = getCardElement(element);
-  cardsContainer.append(cardElement)
-});
-
+        
+    
+          
 modals.forEach(addModalCloseEventListener)
+//-----------------------------------------------test area--------------------
+
+
+initialCards.forEach(card => {
+  const cardFromClass = new Card (card, '.card-template', handleImageClick)
+  cardsContainer.append(cardFromClass.generateCard())
+})
+
+
+//----------------------------------------------test area ---------------------
