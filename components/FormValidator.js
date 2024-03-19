@@ -6,6 +6,7 @@ export default class FormValidator {
     this._inactiveButtonClass = configuration.inactiveButtonClass;
     this._inputErrorClass = configuration.inputErrorClass;
     this._errorClass = configuration.errorClass;
+    this._errorContainer = configuration.errorContainer;
     this._form = form;
   }
 
@@ -31,7 +32,7 @@ export default class FormValidator {
 
   _toggleButtonStatus(){
     if (this._hasInvalidInputs(this._inputs)){
-      this._disableButton(this._submitButton);
+      this.disableButton(this._submitButton);
       return 
     }
   
@@ -49,7 +50,12 @@ export default class FormValidator {
   
   }
 
-  _disableButton(){
+  resetInputs(){
+    this._form.reset()
+  }
+
+
+  disableButton(){
     this._submitButton.disabled = true;
     this._submitButton.classList.add(this._inactiveButtonClass)
   }
@@ -71,10 +77,12 @@ export default class FormValidator {
       })
     })
   };
-
+  
   enableValidation(){
     this._form.addEventListener('submit', (e)=>{
       e.preventDefault();
+      this.resetInputs();
+      this.disableButton();
     });
 
     this._setEventListeners();
@@ -88,5 +96,6 @@ export const configuration = {
   submitButtonSelector: ".modal__save-button",
   inactiveButtonClass: "modal__save-button_disabled",
   inputErrorClass: "modal__input:invalid",
-  errorClass: "modal__error-message_visible"
+  errorClass: "modal__error-message_visible",
+  errorContainer: ".modal__error-message"
 }

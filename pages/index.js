@@ -67,14 +67,15 @@ closeButtons.forEach(button => {
 })
 
 editButton.addEventListener('click', ()=>{
-  openModal(profileModal)
+  openModal(profileModal);
   renderProfileDetails();
+  profileEditForm.disableButton()
 });
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardAddFormElement.addEventListener('submit', handleCardAdd)
 addCardButton.addEventListener('click', ()=>{
   openModal(cardModal)
-  resetInputs(cardAddFormElement)
+  // resetInputs(cardAddFormElement)
 });
 
 function handleEscapeClose(event){
@@ -92,10 +93,6 @@ function openModal(element){
 function renderProfileDetails(){
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-}
-
-function resetInputs(form){
-  form.reset()
 }
 
 function closeModal(element){
