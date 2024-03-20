@@ -111,9 +111,9 @@ function handleCardAdd(evt){
 }
 
 function handleImageClick(image){
-  imagePreview.src = `${image._link}`;
-  imagePreview.alt = `${image._name}`;
-  imageDescription.textContent = `${image._name}`;
+  imagePreview.src = image._link;
+  imagePreview.alt = image._name;
+  imageDescription.textContent = image._name;
   openModal(imagePreviewModal);
 }
 
@@ -126,14 +126,17 @@ function addModalCloseEventListener(modal){
   })
 }
 
+function createCard(cardData){
+  const card = new Card(cardData, '.card-template', handleImageClick);
+  return card
+}
 
 
 modals.forEach(addModalCloseEventListener)
 
 
 initialCards.forEach(card => {
-  const cardFromClass = new Card (card, '.card-template', handleImageClick)
-  cardsContainer.append(cardFromClass.generateCard())
+  cardsContainer.append(createCard(card).generateCard())
 })
 
 

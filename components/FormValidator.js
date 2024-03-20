@@ -13,12 +13,14 @@ export default class FormValidator {
   _showInputError(input){
     const errorBox = this._form.querySelector(`#${input.id}-error`);
     errorBox.classList.add(this._errorClass);
+    input.classList.add(this._inputErrorClass);
     errorBox.textContent = input.validationMessage;
   }
   
   _removeInputError(input){
     const errorBox = this._form.querySelector(`#${input.id}-error`);
     errorBox.classList.remove(this._errorClass);
+    input.classList.remove(this._inputErrorClass);
     errorBox.textContent = '';
   }
   
@@ -95,7 +97,7 @@ export const configuration = {
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__save-button",
   inactiveButtonClass: "modal__save-button_disabled",
-  inputErrorClass: "modal__input:invalid",
+  inputErrorClass: "modal__input_status_invalid",
   errorClass: "modal__error-message_visible",
   errorContainer: ".modal__error-message"
 }
