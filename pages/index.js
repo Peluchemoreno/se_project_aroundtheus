@@ -3,13 +3,6 @@ import FormValidator from "../components/FormValidator.js";
 import {configuration} from "../components/FormValidator.js"
 
 
-//-------------------------------test area---------------------------
-
-
-
-
-//------------------------------------------------------------------//
-
 const initialCards = [{
   name: "Diver",
   link: "https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -75,7 +68,6 @@ profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardAddFormElement.addEventListener('submit', handleCardAdd)
 addCardButton.addEventListener('click', ()=>{
   openModal(cardModal)
-  // resetInputs(cardAddFormElement)
 });
 
 function handleEscapeClose(event){
@@ -139,9 +131,6 @@ function addModalCloseEventListener(modal){
 modals.forEach(addModalCloseEventListener)
 
 
-//-----------------------------------------------test area--------------------
-
-
 initialCards.forEach(card => {
   const cardFromClass = new Card (card, '.card-template', handleImageClick)
   cardsContainer.append(cardFromClass.generateCard())
@@ -150,6 +139,3 @@ initialCards.forEach(card => {
 
 addFormElement.enableValidation()
 profileEditForm.enableValidation()
-
-
-//----------------------------------------------test area ---------------------
