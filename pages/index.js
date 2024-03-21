@@ -62,12 +62,12 @@ closeButtons.forEach(button => {
 editButton.addEventListener('click', ()=>{
   openModal(profileModal);
   renderProfileDetails();
-  profileEditForm.disableButton()
 });
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 cardAddFormElement.addEventListener('submit', handleCardAdd)
 addCardButton.addEventListener('click', ()=>{
   openModal(cardModal)
+  profileEditForm.disableButton()
 });
 
 function handleEscapeClose(event){
@@ -105,8 +105,8 @@ function handleCardAdd(evt){
     name: cardTitleInput.value,
     link: cardImageLinkInput.value
   }
-  const cardElement = new Card(card, '.card-template', handleImageClick);
-  cardsContainer.prepend(cardElement.generateCard())
+  const cardElement = createCard(card)
+  cardsContainer.prepend(cardElement)
   closeModal(cardModal)
 }
 
@@ -128,7 +128,7 @@ function addModalCloseEventListener(modal){
 
 function createCard(cardData){
   const card = new Card(cardData, '.card-template', handleImageClick);
-  return card
+  return card.generateCard()
 }
 
 
@@ -136,7 +136,7 @@ modals.forEach(addModalCloseEventListener)
 
 
 initialCards.forEach(card => {
-  cardsContainer.append(createCard(card).generateCard())
+  cardsContainer.append(createCard(card))
 })
 
 

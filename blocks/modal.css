@@ -100,7 +100,7 @@
   cursor: pointer;
 }
 
-.modal__save-button:hover {
+.modal__save-button:hover:not(:disabled) {
   opacity: .8;
 }
 
