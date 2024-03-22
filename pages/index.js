@@ -1,8 +1,9 @@
+// Imports
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import {configuration} from "../components/FormValidator.js"
 
-
+// Initial variables
 const initialCards = [{
   name: "Diver",
   link: "https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -29,6 +30,7 @@ const initialCards = [{
 }
 ];
 
+// Modal and Form Variables
 const profileModal = document.querySelector('.modal_type_profile');
 const editButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button')
@@ -52,52 +54,56 @@ const addForm = document.querySelector('#cardForm')
 const addFormElement = new FormValidator(configuration, profileForm)
 const profileEditForm = new FormValidator(configuration, addForm)
 
-
-
+// Event listeners
 closeButtons.forEach(button => {
   const modal = button.closest(".modal");
   button.addEventListener('click', ()=>{closeModal(modal)})
-})
+});
 
 editButton.addEventListener('click', ()=>{
   openModal(profileModal);
   renderProfileDetails();
 });
+
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
-cardAddFormElement.addEventListener('submit', handleCardAdd)
+
+cardAddFormElement.addEventListener('submit', handleCardAdd);
+
 addCardButton.addEventListener('click', ()=>{
   openModal(cardModal)
   profileEditForm.disableButton()
 });
 
+modals.forEach(addModalCloseEventListener);
+
+// Functions
 function handleEscapeClose(event){
   if (event.key === "Escape"){
     modals.forEach(closeModal)
   }
-}
-
+};
 
 function openModal(element){
   element.classList.add('modal_opened')
   document.addEventListener('keydown', handleEscapeClose);
-}
+};
 
 function renderProfileDetails(){
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-}
+};
 
 function closeModal(element){
   element.classList.remove('modal_opened');
   document.removeEventListener('keydown', handleEscapeClose)
-}
+};
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault(); 
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closeModal(profileModal);
-}
+};
 
 function handleCardAdd(evt){
   evt.preventDefault();
@@ -108,15 +114,14 @@ function handleCardAdd(evt){
   const cardElement = createCard(card)
   cardsContainer.prepend(cardElement)
   closeModal(cardModal)
-}
+};
 
 function handleImageClick(image){
   imagePreview.src = image._link;
   imagePreview.alt = image._name;
   imageDescription.textContent = image._name;
   openModal(imagePreviewModal);
-}
-
+};
 
 function addModalCloseEventListener(modal){
   modal.addEventListener('mousedown', e => {
@@ -124,21 +129,16 @@ function addModalCloseEventListener(modal){
       closeModal(modal)
     }
   })
-}
+};
 
 function createCard(cardData){
   const card = new Card(cardData, '.card-template', handleImageClick);
   return card.generateCard()
-}
+};
 
-
-modals.forEach(addModalCloseEventListener)
-
-
+// Render page and Enable Validation
 initialCards.forEach(card => {
   cardsContainer.append(createCard(card))
-})
-
-
+});
 addFormElement.enableValidation()
 profileEditForm.enableValidation()
