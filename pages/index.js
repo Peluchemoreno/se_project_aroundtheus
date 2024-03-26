@@ -1,7 +1,10 @@
 // Imports
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import {configuration} from "../components/FormValidator.js"
+import {configuration} from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+
 
 // Initial variables
 const initialCards = [{
@@ -117,10 +120,13 @@ function handleCardAdd(evt){
 };
 
 function handleImageClick(image){
-  imagePreview.src = image._link;
-  imagePreview.alt = image._name;
-  imageDescription.textContent = image._name;
-  openModal(imagePreviewModal);
+  const popupWithImage = new PopupWithImage('.modal_type_image');
+  const data = {
+    name: image._name,
+    link: image._link
+  }
+  popupWithImage.setEventListeners()
+  popupWithImage.open(data)
 };
 
 function addModalCloseEventListener(modal){
@@ -136,9 +142,24 @@ function createCard(cardData){
   return card.generateCard()
 };
 
-// Render page and Enable Validation
-initialCards.forEach(card => {
-  cardsContainer.append(createCard(card))
-});
+// instantiate card section and define render logic
+const cardSection = new Section({
+  items: initialCards,
+  renderer: ()=>{
+    initialCards.forEach(item => {
+      const itemElement = createCard(item);
+      cardSection.addItem(itemElement)
+    })
+  }
+}, ".cards");
+
+
+//Enable Validation and render cards
 addFormElement.enableValidation()
 profileEditForm.enableValidation()
+cardSection.renderItems();
+
+
+// test area ==============================================
+
+//========================================================
