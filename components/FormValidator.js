@@ -73,19 +73,9 @@ export default class FormValidator {
   enableValidation(){
     this._form.addEventListener('submit', (e)=>{
       e.preventDefault();
-      this.resetInputs();
       this.disableButton();
     });
     this._setEventListeners();
   }
 };
 
-export const configuration = {
-  formSelector: ".modal__container",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__save-button",
-  inactiveButtonClass: "modal__save-button_disabled",
-  inputErrorClass: "modal__input_status_invalid",
-  errorClass: "modal__error-message_visible",
-  errorContainer: ".modal__error-message"
-};

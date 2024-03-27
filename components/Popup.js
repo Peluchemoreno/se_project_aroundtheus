@@ -10,16 +10,17 @@ export default class Popup {
   close(){
     this._selector.classList.remove("modal_opened");
   }
-
+  
   _handleEscClose(e){
     if (e.key === "Escape"){
       this.close();
     }
   }
-
+  
   setEventListeners(){
     this._closeButton = this._selector.querySelector('.modal__close-button');
     this._closeButton.addEventListener('click', ()=>{
+      console.log(this._selector)
       this.close();
     });
     this._selector.addEventListener('mousedown', e => {
