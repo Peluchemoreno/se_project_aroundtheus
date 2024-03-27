@@ -60,7 +60,7 @@ function handleCardAdd(){
   }
   const cardElement = createCard(card)
   cardsContainer.prepend(cardElement)
-  closeModal(cardModal)
+  cardFormFromClass.close()
 };
 
 function handleImageClick(image){
