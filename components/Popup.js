@@ -23,7 +23,7 @@ export default class Popup {
       this.close();
     });
     this._selector.addEventListener('mousedown', e => {
-      if (e.target.className === `modal modal_type_${this.id} modal_opened`){
+      if (e.target.className === `modal modal_type_${this._selector.id} modal_opened`){
         this.close()
       }
     })
