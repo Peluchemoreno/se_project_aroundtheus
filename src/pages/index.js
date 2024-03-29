@@ -22,48 +22,40 @@ const cardImageLinkInput = cardAddFormElement.querySelector(".modal__description
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
 const cardsContainer = document.querySelector('.cards');
-const cardModal = document.querySelector('.modal_type_card');
-const profileForm = document.querySelector('#profileForm')
-const addForm = document.querySelector('#cardForm')
 
 // create classes
-const addFormElement = new FormValidator(configuration, profileForm)
-const profileEditForm = new FormValidator(configuration, addForm)
-const cardFormFromClass = new PopupWithForm(".modal_type_card", handleCardAdd);
-const profileFormFromClass = new PopupWithForm(".modal_type_profile", formSubmitCallback);
+const cardAddValidator = new FormValidator(configuration, cardAddFormElement)
+const profileFormValidator = new FormValidator(configuration, profileFormElement)
+const cardModal = new PopupWithForm(".modal_type_card", handleCardAdd);
+const profileModal = new PopupWithForm(".modal_type_profile", handleProfileFormSubmit);
 const userInfo = new UserInfo(userConfigData);
 const cardSection = new Section({
   items: initialCards,
-  renderer: ()=>{
-    initialCards.forEach(item => {
-      const itemElement = createCard(item);
-      cardSection.addItem(itemElement)
-    })
+  renderer: (item)=>{
+    const itemElement = createCard(item);
+    cardSection.addItem(itemElement)
   }
 }, ".cards");
+const popupWithImage = new PopupWithImage('.modal_type_image');
 
 
 // define functions
 function renderProfileDetails(){
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+  nameInput.value = userInfo.getUserInfo().name;
+  jobInput.value = userInfo.getUserInfo().description;
 };
 
 function handleCardAdd(){
-  const card = {
-    name: cardTitleInput.value,
-    link: cardImageLinkInput.value
-  }
+  const card = cardModal.getInputValues(cardAddFormElement)
   const cardElement = createCard(card)
-  cardsContainer.prepend(cardElement)
-  cardFormFromClass.close()
+  cardSection.addItem(cardElement)
+  cardModal.close()
 };
 
 function handleImageClick(image){
-  const popupWithImage = new PopupWithImage('.modal_type_image');
   const data = {
-    name: image._name,
-    link: image._link
+    name: image.title,
+    link: image.url
   }
   popupWithImage.setEventListeners()
   popupWithImage.open(data)
@@ -74,24 +66,23 @@ function createCard(cardData){
   return card.generateCard()
 };
 
-function formSubmitCallback(data){
+function handleProfileFormSubmit(data){
   userInfo.setUserInfo(data);
 }
 
 // Instantiate Classes
-addFormElement.enableValidation()
-profileEditForm.enableValidation()
-cardSection.renderItems();
-profileFormFromClass.setEventListeners();
-cardFormFromClass.setEventListeners();
+cardAddValidator.enableValidation()
+profileFormValidator.enableValidation()
+cardSection.renderItems(initialCards);
+profileModal.setEventListeners();
+cardModal.setEventListeners();
 
 // add event listeners
 editButton.addEventListener('click', ()=>{
-  profileFormFromClass.open()
+  profileModal.open()
   renderProfileDetails();
 });
 
 addCardButton.addEventListener('click', ()=>{
-  cardFormFromClass.open()
-  profileEditForm.disableButton()
+  cardModal.open()
 });
