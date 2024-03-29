@@ -8,6 +8,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "../utils/constants.js";
 import { userConfigData } from "../utils/constants.js";
+import "./index.css"
 
 // select elements
 const editButton = document.querySelector('.profile__edit-button');
@@ -46,11 +47,6 @@ const cardSection = new Section({
 function renderProfileDetails(){
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-};
-
-function closeModal(element){
-  element.classList.remove('modal_opened');
-  document.removeEventListener('keydown', handleEscapeClose)
 };
 
 function handleCardAdd(){
@@ -99,11 +95,3 @@ addCardButton.addEventListener('click', ()=>{
   cardFormFromClass.open()
   profileEditForm.disableButton()
 });
-
-
-
-
-
-// test area ==============================================
-
-//========================================================
