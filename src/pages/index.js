@@ -41,13 +41,14 @@ const popupWithImage = new PopupWithImage('.modal_type_image');
 
 // define functions
 function renderProfileDetails(){
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().description;
+  const { name, description } = userInfo.getUserInfo();
+  nameInput.value = name;
+  jobInput.value = description;
 };
 
-function handleCardAdd(){
-  const card = cardModal.getInputValues(cardAddFormElement)
-  const cardElement = createCard(card)
+function handleCardAdd(data){
+  const { title, url } = data
+  const cardElement = createCard({title, url})
   cardSection.addItem(cardElement)
   cardModal.close()
 };
@@ -57,7 +58,6 @@ function handleImageClick(image){
     name: image.title,
     link: image.url
   }
-  popupWithImage.setEventListeners()
   popupWithImage.open(data)
 };
 
@@ -73,9 +73,10 @@ function handleProfileFormSubmit(data){
 // Instantiate Classes
 cardAddValidator.enableValidation()
 profileFormValidator.enableValidation()
-cardSection.renderItems(initialCards);
+cardSection.renderItems();
 profileModal.setEventListeners();
 cardModal.setEventListeners();
+popupWithImage.setEventListeners()
 
 // add event listeners
 editButton.addEventListener('click', ()=>{

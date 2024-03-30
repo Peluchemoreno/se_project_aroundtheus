@@ -5,22 +5,26 @@ export default class Popup {
   }
 
   open(){
+    // console.log(this._element) // this grabs the correct modal
     this._element.classList.add("modal_opened");
+    document.addEventListener('keydown', this._handleEscClose)
   }
   
   close(){
+    // console.log(this._element) // this grabs the correct modal
     this._element.classList.remove("modal_opened");
     document.removeEventListener('keydown', this._handleEscClose)
   }
   
-  _handleEscClose(e){
-    this._popup = this.querySelector('.modal_opened')
+  _handleEscClose = e => {
+    console.log(e)
     if (e.key === "Escape"){
-      this._popup.classList.remove('modal_opened');
+      this.close();
     }
   }
   
   setEventListeners(){
+    // console.log(this._element) // this grabs the correct modal
     this._closeButton = this._element.querySelector('.modal__close-button');
     this._closeButton.addEventListener('click', ()=>{
       this.close();
@@ -30,6 +34,5 @@ export default class Popup {
         this.close()
       }
     })
-    document.addEventListener('keydown', this._handleEscClose)
   }
 }
