@@ -5,13 +5,11 @@ export default class Popup {
   }
 
   open(){
-    // console.log(this._element) // this grabs the correct modal
     this._element.classList.add("modal_opened");
     document.addEventListener('keydown', this._handleEscClose)
   }
   
   close(){
-    // console.log(this._element) // this grabs the correct modal
     this._element.classList.remove("modal_opened");
     document.removeEventListener('keydown', this._handleEscClose)
   }
@@ -23,7 +21,6 @@ export default class Popup {
   }
   
   setEventListeners(){
-    // console.log(this._element) // this grabs the correct modal
     this._closeButton = this._element.querySelector('.modal__close-button');
     this._closeButton.addEventListener('click', ()=>{
       this.close();

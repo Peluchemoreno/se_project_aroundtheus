@@ -17,11 +17,6 @@ const profileFormElement = document.forms['profileForm'];
 const cardAddFormElement = document.forms['cardForm'];
 const nameInput = profileFormElement.querySelector('.modal__name');
 const jobInput = profileFormElement.querySelector('.modal__description');
-const cardTitleInput = cardAddFormElement.querySelector('.modal__name')
-const cardImageLinkInput = cardAddFormElement.querySelector(".modal__description")
-const profileName = document.querySelector('.profile__title');
-const profileJob = document.querySelector('.profile__subtitle');
-const cardsContainer = document.querySelector('.cards');
 
 // create classes
 const cardAddValidator = new FormValidator(configuration, cardAddFormElement)
