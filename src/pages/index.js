@@ -9,6 +9,7 @@ import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "../utils/constants.js";
 import { userConfigData } from "../utils/constants.js";
 import "./index.css"
+import Api from "../components/Api.js";
 
 // select elements
 const editButton = document.querySelector('.profile__edit-button');
@@ -32,6 +33,13 @@ const cardSection = new Section({
   }
 }, ".cards");
 const popupWithImage = new PopupWithImage('.modal_type_image');
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "32400e4e-bdb6-4554-9f2b-339b0c55f4e6",
+    "Content-Type": "application/json"
+  }
+});
 
 
 // define functions
