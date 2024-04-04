@@ -1,7 +1,10 @@
+import { data } from "autoprefixer";
+
 export default class Card {
   constructor(data, cardSelector, handleImageClick){
-    this.title = data.title;
-    this.url = data.url;
+    this.name = data.name;
+    this.link = data.link;
+    this._id = data._id;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
   };
@@ -26,6 +29,7 @@ export default class Card {
     });
 
     this._cardImageElement.addEventListener('click', ()=>{
+      console.log(this._id)
       this._handleImageClick(this);
     });
     };
@@ -33,9 +37,9 @@ export default class Card {
   
   generateCard(){
     this._cardElement = document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
-    this._cardElement.querySelector('.card__image').src = `${this.url}`;
-    this._cardElement.querySelector('.card__image').alt = `${this.title}`;
-    this._cardElement.querySelector('.card__title').textContent = `${this.title}`;
+    this._cardElement.querySelector('.card__image').src = `${this.link}`;
+    this._cardElement.querySelector('.card__image').alt = `${this.name}`;
+    this._cardElement.querySelector('.card__title').textContent = `${this.name}`;
     this._setEventListeners();
     return this._cardElement
   };
