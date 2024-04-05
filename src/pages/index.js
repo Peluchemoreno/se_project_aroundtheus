@@ -42,9 +42,6 @@ const cardSection = new Section({
 const popupWithImage = new PopupWithImage('.modal_type_image');
 
 
-// api.addCard("test card", "https://plus.unsplash.com/premium_photo-1712141088184-061b87d773aa?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-
-
 // define functions
 function renderProfileDetails(){
   const { name, about } = userInfo.getUserInfo();
@@ -54,13 +51,9 @@ function renderProfileDetails(){
 
 function handleCardAdd(data){
   const { name, link } = data
-  // const cardElement = createCard({name, link})
-  // cardSection.addItem(cardElement)
-  console.log(data)
-  // cardSection.addItem(createCard(api.addCard(name, link)))
-  // console.log(createCard(api.addCard(name, link)))
-  console.log(typeof(api.addCard(name, link)))
-
+  api.addCard(name, link).then((data)=>{
+    cardSection.addItem(createCard(data))
+  });
   cardModal.close()
 };
 
@@ -72,26 +65,30 @@ function handleImageClick(image){
   popupWithImage.open(data)
 };
 
+function handleDeleteClick(id){
+  api.deleteCard(id)
+}
+
 function createCard(cardData){
-  const card = new Card(cardData, '.card-template', handleImageClick);
-  // console.log(cardData)
+  const card = new Card(cardData, '.card-template', handleImageClick, handleDeleteClick);
   return card.generateCard()
 };
 
 function handleProfileFormSubmit(data){
   const {name, description} = data;
-  api.updateProfile(name, description)
-  api.getCurrentUser().then(user => {
-    userInfo.setUserInfo(user)
+  api.updateProfile(name, description).then(data => {
+    return data
+  }).then(() => {
+    api.getCurrentUser().then(user => {
+      userInfo.setUserInfo(user)
+    })
   })
-
-  // userInfo.setUserInfo(data)
 }
 
 // Instantiate Classes
 cardAddValidator.enableValidation()
 profileFormValidator.enableValidation()
-cardSection.renderItems();
+// cardSection.renderItems();
 profileModal.setEventListeners();
 cardModal.setEventListeners();
 popupWithImage.setEventListeners()
@@ -119,10 +116,6 @@ api.getCards().then(cards => {
 })
 
 //test
-// api.deleteCard("660ded598bacc8001aec7e16")
-
-
-
 
 
 //test

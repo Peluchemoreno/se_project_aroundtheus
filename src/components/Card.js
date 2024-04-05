@@ -1,16 +1,18 @@
 import { data } from "autoprefixer";
 
 export default class Card {
-  constructor(data, cardSelector, handleImageClick){
+  constructor(data, cardSelector, handleImageClick, handleDeleteClick){
     this.name = data.name;
     this.link = data.link;
     this._id = data._id;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteClick = handleDeleteClick
   };
   
   _delete(){
     this._cardElement.remove();
+    this._handleDeleteClick(this._id)
   };
   
   _like(){

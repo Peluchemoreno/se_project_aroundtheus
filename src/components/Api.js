@@ -17,7 +17,7 @@ export default class Api {
     })
   }
 
-  addCard(cardName, cardLink){  // partially working
+  addCard(cardName, cardLink){  // working
     return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._header,
@@ -31,7 +31,7 @@ export default class Api {
     })
   }
 
-  getCurrentUser(){ // partially working
+  getCurrentUser(){ // working
     return fetch(`${this._url}/users/me`,{
       method: "GET",
       headers: this._header
@@ -43,7 +43,7 @@ export default class Api {
     })
   }
 
-  updateProfile(name, job){ // partially working works first time and then breaks
+  updateProfile(name, job){ // working
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._header,
