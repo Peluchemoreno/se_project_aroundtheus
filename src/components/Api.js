@@ -17,6 +17,7 @@ export default class Api {
     })
   }
 
+
   addCard(cardName, cardLink){  // working
     return fetch(`${this._url}/cards`, {
       method: "POST",
@@ -65,6 +66,46 @@ export default class Api {
       method: "DELETE",
       headers: this._header
     }).then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    .then(data => {
+      return data
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  likeCard(cardId){
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._header
+    }).then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    .then(data => {
+      return data
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  dislikeCard(cardId){
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._header
+    }).then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    .then(data => {
+      return data
+    }).catch(err => {
+      console.error(err)
+    }) 
+  }
+
+  updateAvatar(avatarUrl){
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._header,
+      body: JSON.stringify({
+        avatar: `${avatarUrl}`
+      })
+    })
+    .then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
     .then(data => {
       return data
     }).catch(err => {

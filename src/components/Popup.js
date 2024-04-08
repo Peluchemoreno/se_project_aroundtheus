@@ -1,7 +1,8 @@
 export default class Popup {
-  constructor(selector){
+  constructor(selector, handleSubmit){
     this._selector = selector
     this._element = document.querySelector(selector);
+    this._handleSubmit = handleSubmit
   }
 
   open(){
