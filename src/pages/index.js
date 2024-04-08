@@ -59,11 +59,19 @@ function renderProfileDetails(){
 };
 
 function handleCardAdd(data){
+  const submitButton = cardAddFormElement.querySelector('.modal__save-button')
+  const text = submitButton.textContent;
+  submitButton.textContent = "Saving..."
+
   const { name, link } = data
   api.addCard(name, link).then((data)=>{
     cardSection.addItem(createCard(data))
+  }).catch(err => {
+    console.error(err)
+  }).finally(()=>{
+    submitButton.textContent = text;
+    cardModal.close()
   });
-  cardModal.close()
 };
 
 function handleImageClick(image){
@@ -73,10 +81,6 @@ function handleImageClick(image){
   }
   popupWithImage.open(data)
 };
-
-function handleLoading(data){
-  console.log(data, 'loading')
-}
 
 function handleDeleteClick(card){
   deleteConfirmModal.open()
@@ -95,11 +99,20 @@ function createCard(cardData){
 };
 
 function handleProfileFormSubmit(data){
+  const submitButton = profileFormElement.querySelector('.modal__save-button')
+  const text = submitButton.textContent;
+  submitButton.textContent = "Saving..."
+
   const {name, description} = data;
   api.updateProfile(name, description).then(data => {
     return data
   }).then(() => {
     renderUserInfo()
+  }).catch(err => {
+    console.error(err)
+  }).finally(()=>{
+    profileModal.close()
+    submitButton.textContent = text;
   })
 }
 
@@ -119,8 +132,16 @@ function renderUserInfo(){
 
 
 function handleAvatarUpdate(info){
+  const submitButton = avatarUpdateFormElement.querySelector('.modal__save-button')
+  const text = submitButton.textContent;
+  submitButton.textContent = "Saving..."
   api.updateAvatar(info.avatar).then(()=>{
     renderUserInfo()
+  }).catch(err => {
+    console.error(err)
+  }).finally(()=>{
+    changeAvatarModal.close()
+    submitButton.textContent = text;
   })
 }
 
