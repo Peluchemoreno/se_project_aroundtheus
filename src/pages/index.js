@@ -86,9 +86,11 @@ function handleDeleteClick(card){
   deleteConfirmModal.open()
   
   deleteConfirmModal.setSubmitHandler(()=>{
-    api.deleteCard(card.id).then(()=>{
+    api.deleteCard(card.getCardId()).then(()=>{
       card.delete()
       deleteConfirmModal.close()
+    }).catch(err => {
+      console.error(err)
     })
   })
 }
@@ -117,16 +119,22 @@ function handleProfileFormSubmit(data){
 }
 
 function handleLikeClick(id){
-  api.likeCard(id)
+  api.likeCard(id).catch(err => {
+    console.error(err)
+  })
 }
 
 function handleDislikeClick(id){
-  api.dislikeCard(id)
+  api.dislikeCard(id).catch(err => {
+    console.error(err)
+  })
 }
 
 function renderUserInfo(){
   api.getCurrentUser().then(user => {
     userInfo.setUserInfo(user)
+  }).catch(err => {
+    console.error(err)
   })
 }
 
@@ -182,11 +190,17 @@ api.getCurrentUser().then(data => {
   userInfo.setUserInfo(data)
 });
 
-api.getCards().then(cards => {
-  cards.forEach(card => {
-    const cardEl = createCard(card)
-    cardSection.addItem(cardEl)
+api.checkAllData(()=>{
+  api.getCards().then(cards => {
+    cards.forEach(card => {
+      const cardEl = createCard(card)
+      cardSection.addItem(cardEl)
+    })
+  }).catch(err => {
+    console.error(err)
   })
+}).catch(err => {
+  console.error(err)
 })
 
 //test

@@ -1,7 +1,7 @@
 export default class Api {
   constructor(options){
     this._url = options.baseUrl;
-    this._header = options.headers
+    this._header = options.headers;
   }
 
   getCards(){ // working
@@ -29,6 +29,8 @@ export default class Api {
     }).then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
     .then(data => {
       return data
+    }).catch(error => {
+      console.error(error)
     })
   }
 
@@ -110,6 +112,14 @@ export default class Api {
       return data
     }).catch(err => {
       console.error(err)
+    })
+  }
+
+  checkAllData(renderCards){
+    return Promise.all([this.getCards(), this.getCurrentUser()]).then(() => {
+      renderCards()
+    }).catch(error => {
+      console.error(error)
     })
   }
 }
