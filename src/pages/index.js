@@ -50,6 +50,11 @@ const cardSection = new Section({
 const popupWithImage = new PopupWithImage('.modal_type_image');
 
 
+//test
+
+
+//test
+
 
 // define functions
 function renderProfileDetails(){
@@ -65,12 +70,14 @@ function handleCardAdd(data){
 
   const { name, link } = data
   api.addCard(name, link).then((data)=>{
-    cardSection.addItem(createCard(data))
+    cardSection.addItem(createCard(data));
+    cardAddValidator.disableButton();
+    cardAddFormElement.reset();
+    cardModal.close()
   }).catch(err => {
     console.error(err)
   }).finally(()=>{
     submitButton.textContent = text;
-    cardModal.close()
   });
 };
 
@@ -101,54 +108,56 @@ function createCard(cardData){
 };
 
 function handleProfileFormSubmit(data){
-  const submitButton = profileFormElement.querySelector('.modal__save-button')
-  const text = submitButton.textContent;
-  submitButton.textContent = "Saving..."
-
+  this.renderLoading(true)
   const {name, description} = data;
   api.updateProfile(name, description).then(data => {
     return data
-  }).then(() => {
-    renderUserInfo()
+  }).then((info) => {
+    userInfo.setUserInfo(info)
+    profileFormValidator.disableButton();
+    profileFormElement.reset();
+    profileModal.close()
   }).catch(err => {
     console.error(err)
   }).finally(()=>{
-    profileModal.close()
-    submitButton.textContent = text;
+    // this.renderLoading(false)
   })
 }
 
 function handleLikeClick(id){
-  api.likeCard(id).catch(err => {
+  api.likeCard(id)
+  .then(()=>{
+    this.like()
+  })
+  .catch(err => {
     console.error(err)
   })
 }
 
 function handleDislikeClick(id){
-  api.dislikeCard(id).catch(err => {
+  api.dislikeCard(id)
+  .then(()=> {
+    this.dislike()
+  })
+  .catch(err => {
     console.error(err)
   })
 }
 
-function renderUserInfo(){
-  api.getCurrentUser().then(user => {
-    userInfo.setUserInfo(user)
-  }).catch(err => {
-    console.error(err)
-  })
-}
 
 
 function handleAvatarUpdate(info){
   const submitButton = avatarUpdateFormElement.querySelector('.modal__save-button')
   const text = submitButton.textContent;
   submitButton.textContent = "Saving..."
-  api.updateAvatar(info.avatar).then(()=>{
-    renderUserInfo()
+  api.updateAvatar(info.avatar).then((info)=>{
+    userInfo.setUserInfo(info)
+    avatarValidator.disableButton();
+    avatarUpdateFormElement.reset();
+    changeAvatarModal.close()
   }).catch(err => {
     console.error(err)
   }).finally(()=>{
-    changeAvatarModal.close()
     submitButton.textContent = text;
   })
 }
@@ -165,6 +174,7 @@ changeAvatarModal.setEventListeners();
 
 // add event listeners
 editButton.addEventListener('click', ()=>{
+  profileModal.renderLoading(false)
   profileModal.open()
   renderProfileDetails();
 });
@@ -183,21 +193,15 @@ avatarOverlay.addEventListener('mouseout', ()=> {
 
 avatarOverlay.addEventListener('click', ()=>{
   changeAvatarModal.open()
+  avatarValidator.disableButton();
 })
 
-//On window load
-api.getCurrentUser().then(data => {
-  userInfo.setUserInfo(data)
-});
 
-api.checkAllData(()=>{
-  api.getCards().then(cards => {
-    cards.forEach(card => {
-      const cardEl = createCard(card)
-      cardSection.addItem(cardEl)
-    })
-  }).catch(err => {
-    console.error(err)
+api.checkAllData()
+.then(([cards, userData])=>{
+  userInfo.setUserInfo(userData)
+  cards.forEach(card => {
+    cardSection.addItem(createCard(card))
   })
 }).catch(err => {
   console.error(err)

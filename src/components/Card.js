@@ -11,6 +11,8 @@ export default class Card {
     this._handleDeleteClick = handleDeleteClick
     this._handleLikeClick = handleLikeClick;
     this._handleDislikeClick = handleDislikeClick;
+    this._cardElement = document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
+    this._cardImageElement = this._cardElement.querySelector('.card__image');
   };
   
   getCardId(){
@@ -21,26 +23,24 @@ export default class Card {
     this._cardElement.remove()
   };
   
-  _like(){
+  like(){
     this._cardElement.querySelector('.card__heart').classList.add("card__heart_active");
-    this._handleLikeClick(this.getCardId())
+    this._isLiked = !this._isLiked
   };
 
-  _dislike(){
-    this._cardElement.querySelector('.card__heart').classList.remove('card__heart_active')
-    this._handleDislikeClick(this.getCardId())
+  dislike(){
+    this._cardElement.querySelector('.card__heart').classList.remove('card__heart_active');
+    this._isLiked = !this._isLiked
   }
 
   _setEventListeners(){
-    this._cardImageElement = this._cardElement.querySelector('.card__image');
-
     this._cardElement.querySelector('.card__heart').addEventListener('click', ()=>{
       if (this._isLiked){
-        this._dislike(this)
+        this._handleDislikeClick(this.getCardId())
       } else {
-        this._like(this)
+        this._handleLikeClick(this.getCardId())
       }
-      this._isLiked = !this._isLiked
+      
     });
 
     this._cardElement.querySelector('.card__delete').addEventListener('click', ()=>{
@@ -48,7 +48,6 @@ export default class Card {
     });
 
     this._cardImageElement.addEventListener('click', ()=>{
-      // console.log(this.getCardId())
       this._handleImageClick(this);
     });
   };
@@ -57,11 +56,7 @@ export default class Card {
     this._cardElement.querySelector('.card__heart').classList.add('card__heart_active')
   }
 
-    
-    
-    
   generateCard(){
-    this._cardElement = document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
     this._cardElement.querySelector('.card__image').src = `${this.link}`;
     this._cardElement.querySelector('.card__image').alt = `${this.name}`;
     this._cardElement.querySelector('.card__title').textContent = `${this.name}`;

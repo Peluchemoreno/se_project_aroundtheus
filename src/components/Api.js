@@ -5,7 +5,6 @@ export default class Api {
   }
 
   _checkStatus(res){
-    console.log(res)
     if (res.ok){
       return res.json()
     } else {
@@ -13,122 +12,81 @@ export default class Api {
     }
   }
 
+  _request(url, options){
+    return fetch(url, options).then(this._checkStatus)
+  }
+
   getCards(){ // working
-    return fetch(`${this._url}/cards`, {
-      method: "GET",
-      headers: this._header
-    })
-    .then(res => this._checkStatus(res))
-    .then(data => {
+    return this._request(this._url + `/cards`, {
+      method: `GET`,
+      headers: this._header,
+    }).then(data => {
       return data
-    }).catch(err => {
-      console.error(err)
     })
   }
 
 
   addCard(cardName, cardLink){  // working
-    return fetch(`${this._url}/cards`, {
+    return this._request(this._url + `/cards`, {
       method: "POST",
       headers: this._header,
       body: JSON.stringify({
         name: cardName,
         link: cardLink
       })
-    }).then(res => res => this._checkStatus(res))
-    .then(data => {
-      return data
-    }).catch(error => {
-      console.error(error)
-    })
+    }).then(data => data)
   }
 
   getCurrentUser(){ // working
-    return fetch(`${this._url}/users/me`,{
+    return this._request(this._url + `/users/me`,{
       method: "GET",
       headers: this._header
-    })
-    .then(res => this._checkStatus(res))
-    .then(data => data)
-    .catch(err => {
-      console.error(err)
-    })
+    }).then(data => data)
   }
 
   updateProfile(name, job){ // working
-    return fetch(`${this._url}/users/me`, {
+    return this._request(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._header,
       body: JSON.stringify({
         name: name,
         about: job,
       })
-    })
-    .then(res => res => this._checkStatus(res))
-    .then(data => {
-      return data
-    }).catch(err => {
-      console.error(err)
-    })
+    }).then(data => data)
   }
 
   deleteCard(cardId){ // working
-    return fetch(`${this._url}/cards/${cardId}`, {
+    return this._request(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._header
-    }).then(res => res => this._checkStatus(res))
-    .then(data => {
-      return data
-    }).catch(err => {
-      console.error(err)
-    })
+    }).then(data => data)
   }
 
   likeCard(cardId){
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._header
-    }).then(res => res => this._checkStatus(res))
-    .then(data => {
-      return data
-    }).catch(err => {
-      console.error(err)
-    })
+    }).then(data => data)
   }
 
   dislikeCard(cardId){
-    return fetch(`${this._url}/cards/${cardId}/likes`, {
+    return this._request(`${this._url}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._header
-    }).then(res => res => this._checkStatus(res))
-    .then(data => {
-      return data
-    }).catch(err => {
-      console.error(err)
-    }) 
+    }).then(data => data)
   }
 
   updateAvatar(avatarUrl){
-    return fetch(`${this._url}/users/me/avatar`, {
+    return this._request(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._header,
       body: JSON.stringify({
         avatar: `${avatarUrl}`
       })
-    })
-    .then(res => this._checkStatus(res))
-    .then(data => {
-      return data
-    }).catch(err => {
-      console.error(err)
-    })
+    }).then(data => data)
   }
 
-  checkAllData(renderCards){
-    return Promise.all([this.getCards(), this.getCurrentUser()]).then(() => {
-      renderCards()
-    }).catch(error => {
-      console.error(error)
-    })
+  checkAllData(){
+    return Promise.all([this.getCards(), this.getCurrentUser()])
   }
 }
