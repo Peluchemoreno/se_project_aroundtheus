@@ -4,12 +4,21 @@ export default class Api {
     this._header = options.headers;
   }
 
+  _checkStatus(res){
+    console.log(res)
+    if (res.ok){
+      return res.json()
+    } else {
+      return Promise.reject(`Error: ${res.status}`)
+    }
+  }
+
   getCards(){ // working
     return fetch(`${this._url}/cards`, {
       method: "GET",
       headers: this._header
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    .then(res => this._checkStatus(res))
     .then(data => {
       return data
     }).catch(err => {
@@ -26,7 +35,7 @@ export default class Api {
         name: cardName,
         link: cardLink
       })
-    }).then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    }).then(res => res => this._checkStatus(res))
     .then(data => {
       return data
     }).catch(error => {
@@ -39,7 +48,7 @@ export default class Api {
       method: "GET",
       headers: this._header
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    .then(res => this._checkStatus(res))
     .then(data => data)
     .catch(err => {
       console.error(err)
@@ -55,7 +64,7 @@ export default class Api {
         about: job,
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    .then(res => res => this._checkStatus(res))
     .then(data => {
       return data
     }).catch(err => {
@@ -67,7 +76,7 @@ export default class Api {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._header
-    }).then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    }).then(res => res => this._checkStatus(res))
     .then(data => {
       return data
     }).catch(err => {
@@ -79,7 +88,7 @@ export default class Api {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._header
-    }).then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    }).then(res => res => this._checkStatus(res))
     .then(data => {
       return data
     }).catch(err => {
@@ -91,7 +100,7 @@ export default class Api {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._header
-    }).then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    }).then(res => res => this._checkStatus(res))
     .then(data => {
       return data
     }).catch(err => {
@@ -107,7 +116,7 @@ export default class Api {
         avatar: `${avatarUrl}`
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
+    .then(res => this._checkStatus(res))
     .then(data => {
       return data
     }).catch(err => {
