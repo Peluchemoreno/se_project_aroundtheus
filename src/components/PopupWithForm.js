@@ -24,9 +24,8 @@ export default class PopupWithForm extends Popup {
 
   setInputValues(data){
     this._inputList.forEach(input => {
-      console.log(input)
+      input.value = data[input.name]
     })
-    console.log(data)
   }
 
   renderLoading(isLoading, loadingText=`Saving...`){
@@ -40,6 +39,7 @@ export default class PopupWithForm extends Popup {
   
   setEventListeners(){
     this._element.addEventListener('submit', (e)=>{
+      this.renderLoading(true)
       e.preventDefault();
       this._submitCallback(this._getInputValues())
     })

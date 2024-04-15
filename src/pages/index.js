@@ -1,4 +1,6 @@
-// Imports
+/* ------------------------------------------------------ */
+/*                        Imports                       */
+/* ------------------------------------------------------ */
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import { configuration } from "../utils/constants.js";
@@ -13,18 +15,18 @@ import "./index.css"
 import Api from "../components/Api.js";
 import { _ } from "core-js";
 
-// select elements
+/* ------------------------------------------------------ */
+/*                     select elements                    */
+/* ------------------------------------------------------ */
 const editButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button');
 const profileFormElement = document.forms['profileForm'];
-const cardAddFormElement = document.forms['cardForm'];
-const avatarUpdateFormElement = document.forms['updateAvatar']
-const nameInput = profileFormElement.querySelector('.modal__name');
-const jobInput = profileFormElement.querySelector('.modal__description');
 const avatar = document.querySelector('.profile__photo');
 const avatarOverlay = document.querySelector('.profile__photo-overlay')
 
-// create classes
+/* ------------------------------------------------------ */
+/*                     create classes                     */
+/* ------------------------------------------------------ */
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
@@ -32,9 +34,6 @@ const api = new Api({
     "Content-Type": "application/json",
   }
 });
-const avatarValidator = new FormValidator(configuration, avatarUpdateFormElement)
-const cardAddValidator = new FormValidator(configuration, cardAddFormElement)
-const profileFormValidator = new FormValidator(configuration, profileFormElement)
 const deleteConfirmModal = new PopupWithForm('.modal_type_delete-confirmation');
 const changeAvatarModal = new PopupWithForm('.modal_type_update-avatar', handleAvatarUpdate)
 const cardModal = new PopupWithForm(".modal_type_card", handleCardAdd);
@@ -50,34 +49,26 @@ const cardSection = new Section({
 const popupWithImage = new PopupWithImage('.modal_type_image');
 
 
-//test
+/* ------------------------------------------------------ */
+/*                    define functions                    */
+/* ------------------------------------------------------ */
 
-
-//test
-
-
-// define functions
-function renderProfileDetails(){
+function renderProfileDetails(modal){
   const { name, about } = userInfo.getUserInfo();
-  nameInput.value = name;
-  jobInput.value = about;
+  modal.setInputValues({name, about})
 };
 
 function handleCardAdd(data){
-  const submitButton = cardAddFormElement.querySelector('.modal__save-button')
-  const text = submitButton.textContent;
-  submitButton.textContent = "Saving..."
-
   const { name, link } = data
   api.addCard(name, link).then((data)=>{
     cardSection.addItem(createCard(data));
-    cardAddValidator.disableButton();
-    cardAddFormElement.reset();
+    formValidators['cardForm'].disableButton();
+    formValidators['cardForm'].resetInputs();
     cardModal.close()
   }).catch(err => {
     console.error(err)
   }).finally(()=>{
-    submitButton.textContent = text;
+    this.renderLoading(false)
   });
 };
 
@@ -108,19 +99,18 @@ function createCard(cardData){
 };
 
 function handleProfileFormSubmit(data){
-  this.renderLoading(true)
   const {name, description} = data;
   api.updateProfile(name, description).then(data => {
     return data
   }).then((info) => {
     userInfo.setUserInfo(info)
-    profileFormValidator.disableButton();
-    profileFormElement.reset();
+    formValidators['profileForm'].disableButton();
+    formValidators['profileForm'].resetInputs();
     profileModal.close()
   }).catch(err => {
     console.error(err)
   }).finally(()=>{
-    // this.renderLoading(false)
+    this.renderLoading(false)
   })
 }
 
@@ -144,39 +134,44 @@ function handleDislikeClick(id){
   })
 }
 
-
-
 function handleAvatarUpdate(info){
-  const submitButton = avatarUpdateFormElement.querySelector('.modal__save-button')
-  const text = submitButton.textContent;
-  submitButton.textContent = "Saving..."
   api.updateAvatar(info.avatar).then((info)=>{
     userInfo.setUserInfo(info)
-    avatarValidator.disableButton();
-    avatarUpdateFormElement.reset();
+    formValidators['updateAvatar'].disableButton();
+    formValidators['updateAvatar'].resetInputs();
     changeAvatarModal.close()
   }).catch(err => {
     console.error(err)
   }).finally(()=>{
-    submitButton.textContent = text;
+    this.renderLoading(false)
   })
 }
 
-// Instantiate Classes
-cardAddValidator.enableValidation()
-profileFormValidator.enableValidation()
-avatarValidator.enableValidation()
+const formValidators = {};
+function enableValidation(config){
+  const forms = Array.from(document.querySelectorAll(config.formSelector));
+  forms.forEach(form => {
+    const validator = new FormValidator(config, form);
+    const formName = form.getAttribute('id');
+    
+    formValidators[formName] = validator;
+    validator.enableValidation()
+  })
+}
+
+enableValidation(configuration)
+
+/* ------------------------------------------------------ */
+/*                   add event listeners                  */
+/* ------------------------------------------------------ */
 profileModal.setEventListeners();
 cardModal.setEventListeners();
 popupWithImage.setEventListeners()
 deleteConfirmModal.setEventListeners();
 changeAvatarModal.setEventListeners();
-
-// add event listeners
 editButton.addEventListener('click', ()=>{
-  profileModal.renderLoading(false)
   profileModal.open()
-  renderProfileDetails();
+  renderProfileDetails(profileModal);
 });
 
 addCardButton.addEventListener('click', ()=>{
@@ -193,10 +188,12 @@ avatarOverlay.addEventListener('mouseout', ()=> {
 
 avatarOverlay.addEventListener('click', ()=>{
   changeAvatarModal.open()
-  avatarValidator.disableButton();
+  formValidators['updateAvatar'].disableButton();
 })
 
-
+/* ------------------------------------------------------ */
+/*                         onload                         */
+/* ------------------------------------------------------ */
 api.checkAllData()
 .then(([cards, userData])=>{
   userInfo.setUserInfo(userData)
@@ -206,8 +203,3 @@ api.checkAllData()
 }).catch(err => {
   console.error(err)
 })
-
-//test
-
-
-//test
