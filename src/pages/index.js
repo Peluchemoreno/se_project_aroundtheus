@@ -99,8 +99,8 @@ function createCard(cardData){
 };
 
 function handleProfileFormSubmit(data){
-  const {name, description} = data;
-  api.updateProfile(name, description).then(data => {
+  const {name, about} = data;
+  api.updateProfile(name, about).then(data => {
     return data
   }).then((info) => {
     userInfo.setUserInfo(info)

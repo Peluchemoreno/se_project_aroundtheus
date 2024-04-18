@@ -44,8 +44,8 @@ export default class Api {
     }).then(data => data)
   }
 
-  updateProfile(name, job){ // working
-    return this._request(`${this._url}/users/me`, {
+  updateProfile(name, job){ 
+    return this._request(this._url + `/users/me`, {
       method: "PATCH",
       headers: this._header,
       body: JSON.stringify({
