@@ -59,19 +59,14 @@ function renderProfileDetails(modal){
 };
 
 function handleCardAdd(data){
-  this.renderLoading(true)
-  const { name, link } = data
-  api.addCard(name, link).then((data)=>{
-    cardSection.addItem(createCard(data));
-    formValidators['cardForm'].disableButton();
-    formValidators['cardForm'].resetInputs();
-    cardModal.close()
-  }).catch(err => {
-    console.error(err)
-  }).finally(()=>{
-    this.renderLoading(false)
-  });
-};
+  const {name, link} = data;
+  function makeRequest(){
+    return api.addCard(name, link).then((data)=>{
+      cardSection.addItem(createCard(data))
+    })
+  }
+  handleSubmit(makeRequest, cardModal)
+}
 
 function handleImageClick(image){
   const data = {
@@ -85,13 +80,12 @@ function handleDeleteClick(card){
   deleteConfirmModal.open()
   
   deleteConfirmModal.setSubmitHandler(()=>{
-    deleteConfirmModal.renderLoading(true)
+    deleteConfirmModal.renderLoading(true, "Deleting...")
     api.deleteCard(card.getCardId()).then(()=>{
       card.delete()
       deleteConfirmModal.close()
-    }).catch(err => {
-      console.error(err)
-    }).finally(()=>{
+    }).catch(console.error)
+    .finally(()=>{
       deleteConfirmModal.renderLoading(false)
     })
   })
@@ -102,55 +96,42 @@ function createCard(cardData){
   return card.generateCard()
 };
 
+
 function handleProfileFormSubmit(data){
-  this.renderLoading(true)
   const {name, about} = data;
-  api.updateProfile(name, about).then(data => {
-    return data
-  }).then((info) => {
-    userInfo.setUserInfo(info)
-    formValidators['profileForm'].disableButton();
-    formValidators['profileForm'].resetInputs();
-    profileModal.close()
-  }).catch(err => {
-    console.error(err)
-  }).finally(()=>{
-    this.renderLoading(false)
-  })
+  function makeRequest(){
+    return api.updateProfile(name, about).then((userData)=>{
+      userInfo.setUserInfo(userData)
+    })
+  }
+
+  handleSubmit(makeRequest, profileModal)
 }
 
-function handleLikeClick(id){
+function handleLikeClick(id, card){
   api.likeCard(id)
   .then(()=>{
-    this.like()
+    card.like()
   })
-  .catch(err => {
-    console.error(err)
-  })
+  .catch(console.error)
 }
 
-function handleDislikeClick(id){
+function handleDislikeClick(id, card){
   api.dislikeCard(id)
   .then(()=> {
-    this.dislike()
+    card.dislike()
   })
-  .catch(err => {
-    console.error(err)
-  })
+  .catch(console.error)
 }
 
 function handleAvatarUpdate(info){
-  this.renderLoading(true)
-  api.updateAvatar(info.avatar).then((info)=>{
-    userInfo.setUserInfo(info)
-    formValidators['updateAvatar'].disableButton();
-    formValidators['updateAvatar'].resetInputs();
-    changeAvatarModal.close()
-  }).catch(err => {
-    console.error(err)
-  }).finally(()=>{
-    this.renderLoading(false)
-  })
+  function makeRequest(){
+    return api.updateAvatar(info.avatar).then((info)=>{
+      userInfo.setUserInfo(info)
+    })
+  }
+
+  handleSubmit(makeRequest, changeAvatarModal)
 }
 
 const formValidators = {};
@@ -164,8 +145,20 @@ function enableValidation(config){
     validator.enableValidation()
   })
 }
-
 enableValidation(configuration)
+
+function handleSubmit(request, popupInstance, loadingText="Saving..."){
+  popupInstance.renderLoading(true, loadingText);
+  request()
+  .then(()=>{
+    popupInstance.close()
+  })
+  .catch(console.error)
+  .finally(()=>{
+    popupInstance.renderLoading(false)
+  })
+}
+
 
 /* ------------------------------------------------------ */
 /*                   add event listeners                  */
@@ -206,6 +199,4 @@ api.checkAllData()
   cards.forEach(card => {
     cardSection.addItem(createCard(card))
   })
-}).catch(err => {
-  console.error(err)
-})
+}).catch(console.error)

@@ -36,9 +36,9 @@ export default class Card {
   _setEventListeners(){
     this._cardElement.querySelector('.card__heart').addEventListener('click', ()=>{
       if (this._isLiked){
-        this._handleDislikeClick(this.getCardId())
+        this._handleDislikeClick(this.getCardId(), this)
       } else {
-        this._handleLikeClick(this.getCardId())
+        this._handleLikeClick(this.getCardId(), this)
       }
       
     });
@@ -57,8 +57,8 @@ export default class Card {
   }
 
   generateCard(){
-    this._cardElement.querySelector('.card__image').src = `${this.link}`;
-    this._cardElement.querySelector('.card__image').alt = `${this.name}`;
+    this._cardImageElement.src = `${this.link}`;
+    this._cardImageElement.alt = `${this.name}`;
     this._cardElement.querySelector('.card__title').textContent = `${this.name}`;
     if (this._isLiked){
       this.renderLike()
