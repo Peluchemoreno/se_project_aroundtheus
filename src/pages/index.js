@@ -85,11 +85,14 @@ function handleDeleteClick(card){
   deleteConfirmModal.open()
   
   deleteConfirmModal.setSubmitHandler(()=>{
+    deleteConfirmModal.renderLoading(true)
     api.deleteCard(card.getCardId()).then(()=>{
       card.delete()
       deleteConfirmModal.close()
     }).catch(err => {
       console.error(err)
+    }).finally(()=>{
+      deleteConfirmModal.renderLoading(false)
     })
   })
 }
