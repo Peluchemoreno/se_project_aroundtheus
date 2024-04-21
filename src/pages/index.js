@@ -63,6 +63,9 @@ function handleCardAdd(data){
   function makeRequest(){
     return api.addCard(name, link).then((data)=>{
       cardSection.addItem(createCard(data))
+    }).then(()=>{
+      formValidators['cardForm'].disableButton();
+      formValidators['cardForm'].resetInputs();
     })
   }
   handleSubmit(makeRequest, cardModal)
@@ -76,19 +79,35 @@ function handleImageClick(image){
   popupWithImage.open(data)
 };
 
+// function handleDeleteClick(card){
+//   deleteConfirmModal.open()
+  
+//   deleteConfirmModal.setSubmitHandler(()=>{
+//     deleteConfirmModal.renderLoading(true, "Deleting...")
+//     api.deleteCard(card.getCardId()).then(()=>{
+//       card.delete()
+//       deleteConfirmModal.close()
+//     }).catch(console.error)
+//     .finally(()=>{
+//       deleteConfirmModal.renderLoading(false)
+//     })
+//   })
+// }
+
 function handleDeleteClick(card){
   deleteConfirmModal.open()
-  
   deleteConfirmModal.setSubmitHandler(()=>{
-    deleteConfirmModal.renderLoading(true, "Deleting...")
-    api.deleteCard(card.getCardId()).then(()=>{
-      card.delete()
-      deleteConfirmModal.close()
-    }).catch(console.error)
-    .finally(()=>{
-      deleteConfirmModal.renderLoading(false)
-    })
+    function makeRequest(){
+      return api.deleteCard(card.getCardId()).then(()=>{
+        card.delete()
+      })
+  
+    }
+  
+    handleSubmit(makeRequest, deleteConfirmModal, "Deleting...")
+
   })
+
 }
 
 function createCard(cardData){
@@ -102,6 +121,9 @@ function handleProfileFormSubmit(data){
   function makeRequest(){
     return api.updateProfile(name, about).then((userData)=>{
       userInfo.setUserInfo(userData)
+    }).then(()=>{
+      formValidators['profileForm'].disableButton()
+      formValidators['profileForm'].resetInputs()
     })
   }
 
@@ -128,6 +150,9 @@ function handleAvatarUpdate(info){
   function makeRequest(){
     return api.updateAvatar(info.avatar).then((info)=>{
       userInfo.setUserInfo(info)
+    }).then(()=>{
+      formValidators['updateAvatar'].disableButton()
+      formValidators['updateAvatar'].resetInputs()
     })
   }
 
