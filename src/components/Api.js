@@ -2,6 +2,7 @@ export default class Api {
   constructor(options){
     this._url = options.baseUrl;
     this._header = options.headers;
+
   }
 
   _checkStatus(res){

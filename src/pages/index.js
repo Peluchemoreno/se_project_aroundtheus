@@ -59,6 +59,7 @@ function renderProfileDetails(modal){
 };
 
 function handleCardAdd(data){
+  this.renderLoading(true)
   const { name, link } = data
   api.addCard(name, link).then((data)=>{
     cardSection.addItem(createCard(data));
@@ -99,6 +100,7 @@ function createCard(cardData){
 };
 
 function handleProfileFormSubmit(data){
+  this.renderLoading(true)
   const {name, about} = data;
   api.updateProfile(name, about).then(data => {
     return data
@@ -135,6 +137,7 @@ function handleDislikeClick(id){
 }
 
 function handleAvatarUpdate(info){
+  this.renderLoading(true)
   api.updateAvatar(info.avatar).then((info)=>{
     userInfo.setUserInfo(info)
     formValidators['updateAvatar'].disableButton();
