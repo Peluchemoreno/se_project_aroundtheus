@@ -79,21 +79,6 @@ function handleImageClick(image){
   popupWithImage.open(data)
 };
 
-// function handleDeleteClick(card){
-//   deleteConfirmModal.open()
-  
-//   deleteConfirmModal.setSubmitHandler(()=>{
-//     deleteConfirmModal.renderLoading(true, "Deleting...")
-//     api.deleteCard(card.getCardId()).then(()=>{
-//       card.delete()
-//       deleteConfirmModal.close()
-//     }).catch(console.error)
-//     .finally(()=>{
-//       deleteConfirmModal.renderLoading(false)
-//     })
-//   })
-// }
-
 function handleDeleteClick(card){
   deleteConfirmModal.open()
   deleteConfirmModal.setSubmitHandler(()=>{
