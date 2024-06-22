@@ -5,7 +5,6 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import { configuration } from "../utils/constants.js";
 import Section from "../components/Section.js";
-import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
@@ -20,7 +19,6 @@ import { _ } from "core-js";
 /* ------------------------------------------------------ */
 const editButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button');
-const profileFormElement = document.forms['profileForm'];
 const avatar = document.querySelector('.profile__photo');
 const avatarOverlay = document.querySelector('.profile__photo-overlay')
 
