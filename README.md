@@ -26,6 +26,6 @@ This project is front end focused, responsive web application that allows a user
 
 ## Links
 
-[Link to video example](https://www.loom.com/share/f97a6915dbe1449db9053f2024b60a17?sid=f8711af6-ce89-42db-a635-d3980aa9f0de)
-[Live demo](https://peluchemoreno.github.io/se_project_aroundtheus/index.html)
-[Video demo](https://drive.google.com/file/d/1iYdf16MzpEFVyEUoqppGz159i_a1kxMV/view?usp=sharing)
+- [Link to video example](https://www.loom.com/share/f97a6915dbe1449db9053f2024b60a17?sid=f8711af6-ce89-42db-a635-d3980aa9f0de)
+- [Live demo](https://peluchemoreno.github.io/se_project_aroundtheus/index.html)
+- [Video demo](https://drive.google.com/file/d/1iYdf16MzpEFVyEUoqppGz159i_a1kxMV/view?usp=sharing)
